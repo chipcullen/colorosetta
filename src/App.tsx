@@ -3,6 +3,7 @@ import './App.css';
 import { ColorProvider } from './utils/ColorContext';
 import { useQueryString } from "./utils/useQueryString";
 import { colorTypes } from './utils/colorTypes';
+import { toRgba } from './utils/toRgba';
 
 import { Swatch } from './components/Swatch';
 import { Input } from './components/Input';
@@ -10,17 +11,12 @@ import { Input } from './components/Input';
 
 const App: React.FC = () => {
 
-  const [color, setColor] = useQueryString("color");
+  const defaultRgba = `rgab(255, 0, 0, 1)`;
+  const [color, setColor] = useQueryString("rgba", defaultRgba);
 
-
-  // if (color === undefined) {
-  //   // console.log('color is undefined');
-  //   setColor("#fff");
-  //   // passedColor = "#fff";
-  // }
-
-  const onInputChange = (value: string) => {
-    setColor(value);
+  const onInputChange = (value: string, colorType: colorTypes) => {
+    const rgba = toRgba(value, colorType);
+    setColor(`rgba(${rgba[0]}, ${rgba[1]}, ${rgba[2]}, ${rgba[3]})`)
   }
 
   return (

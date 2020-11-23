@@ -27,7 +27,7 @@ const Input: React.FC<InputProps> = props => {
 
     if (isValidColor(changedValue, colorType)) {
       // console.log('valid color');
-      onChange(changedValue);
+      onChange(changedValue, colorType);
     } else {
       // console.log('not valid color');
     }

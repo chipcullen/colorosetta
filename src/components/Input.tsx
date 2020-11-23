@@ -7,6 +7,7 @@ type InputProps = {
   // value?: any;
   defaultValue?: any;
   onChange: Function;
+  colorType: string;
 };
 
 const Input: React.FC<InputProps> = props => {

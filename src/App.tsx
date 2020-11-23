@@ -29,29 +29,31 @@ function App() {
   const onInputChange = (value: string) => {
     // const value = e.currentTarget.value;
     console.log(value)
+    setColor(value);
   }
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>ColouRosetta</h1>
-        <p>A little utility to translate colors</p>
+        <p>A utility to translate colors</p>
       </header>
       <Swatch color="rgba(255, 0, 0, .4)" />
 
       <section className="inputs">
         <Input
           labelText="HSL"
+          colorType="hsl"
           placeHolder="120, 100, 50"
           defaultValue={passedColor}
           onChange={onInputChange}
         />
-        <Input
+        {/* <Input
           labelText="HSLA"
           placeHolder="140, 100, 50, 1.0"
           defaultValue={passedColor}
           onChange={onInputChange}
-        />
+        /> */}
         {
         // @todo
         // rgb

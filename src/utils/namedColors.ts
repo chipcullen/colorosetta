@@ -151,4 +151,6 @@ const namedColors = [
   "YellowGreen"
 ];
 
-export { namedColors };
+const lowerCaseNamedColors = namedColors.map(c => c.toLowerCase());
+
+export { namedColors, lowerCaseNamedColors };

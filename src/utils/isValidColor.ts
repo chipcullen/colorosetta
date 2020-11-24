@@ -1,10 +1,5 @@
 import { colorTypes } from './colorTypes';
-
-import { namedColors } from  './namedColors'
-
-// taking the named colors and converting them to lowercase
-// for comparison
-const lowerCaseNamedColors = namedColors.map(c => c.toLowerCase());
+import { lowerCaseNamedColors } from  './namedColors'
 
 const isValidHex6 = (color: string): boolean => {
   // https://stackoverflow.com/a/8027444/1173898

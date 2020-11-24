@@ -1,24 +1,27 @@
 import React, { useState, useContext, ChangeEvent } from "react";
 
-import { ColorContext } from '../utils/ColorContext';
+// import { ColorContext } from '../utils/ColorContext';
 import { colorTypes } from '../utils/colorTypes';
 import { isValidColor } from '../utils/isValidColor';
+// import { typeOfColor } from '../utils/typeOfColor';
+import { translatedColor } from '../utils/translatedColor';
 
 type InputProps = {
   labelText: string;
   placeHolder: string;
   onChange: Function;
   colorType: colorTypes;
+  incomingColor: string;
+  incomingColorType: colorTypes;
 };
 
 const Input: React.FC<InputProps> = props => {
 
   const {
-    labelText, placeHolder, onChange, colorType
+    labelText, placeHolder, onChange, colorType, incomingColor, incomingColorType
   } = props;
 
-  const color = useContext(ColorContext);
-  const [value, setValue] = useState(color);
+  const [value, setValue] = useState(incomingColor);
   const [focus, setFocus] = useState(false);
 
   const localChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +30,7 @@ const Input: React.FC<InputProps> = props => {
 
     if (isValidColor(changedValue, colorType)) {
       // console.log('valid color');
-      onChange(changedValue, colorType);
+      onChange(changedValue);
     } else {
       // console.log('not valid color');
     }
@@ -35,8 +38,13 @@ const Input: React.FC<InputProps> = props => {
 
   // if this input is not in focus, and the color context is different
   // set value
-  if (!focus && color !== value) {
-    setValue(color);
+
+  // const incomingColorType = typeOfColor(color);
+  const translatedIncomingColor = translatedColor(incomingColor, incomingColorType, colorType);
+
+
+  if (!focus && translatedIncomingColor !== colorTypes.none && translatedIncomingColor !== value) {
+    setValue(translatedIncomingColor);
   }
 
   return (

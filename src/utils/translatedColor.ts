@@ -1,8 +1,8 @@
 import { colorTypes } from './colorTypes';
 import { hexToRgb, rgbToRgb, hslToRgb } from './toRgb';
-import { rgbaToRgba, hex8ToRgba } from './toRgba';
+import { rgbaToRgba, hex8ToRgba, hslaToRgba } from './toRgba';
 import { rgbToHex, hslToHex, rgbArrayToHex } from './toHex';
-import { rgbaToHex8 } from './toHex8';
+import { rgbaToHex8, hslaToHex8 } from './toHex8';
 import { rgbToHsl, hex6ToHsl, hslToHsl, rgbArrayToHsl } from './toHsl';
 import { rgbaToHsla, hex8ToHsla } from './toHsla';
 import { calculateOverlay } from './calculateOverlay';
@@ -128,6 +128,25 @@ const translatedColor = (
           return formatRgbAsRgba(hslToRgb(color));
         case targetColorType === colorTypes.hsla:
           return formatHslAsHsla(hslToHsl(color));
+        default:
+          break;
+      }
+      break;
+    // HSLA
+    case startingColorType === colorTypes.hsla:
+      const hslaAsRgbArray = hslaToRgba(color);
+      const hslaOverlay = calculateOverlay(hslaAsRgbArray, [255, 255, 255])
+      switch(true) {
+        case targetColorType === colorTypes.hex6:
+          return rgbArrayToHex(hslaOverlay);
+        case targetColorType === colorTypes.hex8:
+          return hslaToHex8(color);
+        case targetColorType === colorTypes.rgb:
+          return formatRgb(hslaOverlay);
+        case targetColorType === colorTypes.rgba:
+          return formatRgba(hslaAsRgbArray);
+        case targetColorType === colorTypes.hsl:
+          return formatHsl(rgbArrayToHsl(hslaOverlay));
         default:
           break;
       }

@@ -31,7 +31,7 @@ const App: React.FC = () => {
       <section className="inputs">
 
         <Input
-          labelText="hex6 1"
+          labelText="hex6"
           colorType={colorTypes.hex6}
           placeHolder="#ffffff"
           onChange={onInputChange}
@@ -40,7 +40,7 @@ const App: React.FC = () => {
         />
 
         <Input
-          labelText="hex8 1"
+          labelText="hex8"
           colorType={colorTypes.hex8}
           placeHolder="#ffffffff"
           onChange={onInputChange}
@@ -49,7 +49,7 @@ const App: React.FC = () => {
         />
 
         <Input
-          labelText="rgb 1"
+          labelText="rgb"
           colorType={colorTypes.rgb}
           placeHolder="hsl(120, 100%, 50%)"
           onChange={onInputChange}
@@ -58,7 +58,7 @@ const App: React.FC = () => {
         />
 
         <Input
-          labelText="rgba 1"
+          labelText="rgba"
           colorType={colorTypes.rgba}
           placeHolder="#ffffff"
           onChange={onInputChange}
@@ -67,7 +67,7 @@ const App: React.FC = () => {
         />
 
         <Input
-          labelText="hsl 1"
+          labelText="hsl"
           colorType={colorTypes.hsl}
           placeHolder="#ffffff"
           onChange={onInputChange}
@@ -76,7 +76,7 @@ const App: React.FC = () => {
         />
 
         <Input
-          labelText="hsla 1"
+          labelText="hsla"
           colorType={colorTypes.hsla}
           placeHolder="#ffffff"
           onChange={onInputChange}

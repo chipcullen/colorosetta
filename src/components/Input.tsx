@@ -1,4 +1,4 @@
-import React, { useState, useContext, ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 
 // import { ColorContext } from '../utils/ColorContext';
 import { colorTypes } from '../utils/colorTypes';

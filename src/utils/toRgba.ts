@@ -3,7 +3,7 @@ import { toRgb } from './toRgb';
 
 // handles #0000 or #00000000
 // based on this function: https://css-tricks.com/converting-color-spaces-in-javascript/#article-header-id-3
-const hexaToRgba = (hex: string) => {
+const hex8ToRgba = (hex: string) => {
   let r: string | number = 0;
   let g: string | number = 0;
   let b: string | number = 0;
@@ -30,7 +30,7 @@ const hexaToRgba = (hex: string) => {
     b = "0x" + hex[5] + hex[6];
     a = "0x" + hex[7] + hex[8];
   }
-  a = +((a as number) / 255).toFixed(3);
+  a = +((a as number) / 255).toFixed(2);
 
   return [+r, +g, +b, +a];
 };
@@ -137,7 +137,7 @@ const toRgba = (color: string, colorType: colorTypes) => {
     case colorType === colorTypes.hex6:
       return toRgb(color, colorType).concat([1]);
     case colorType === colorTypes.hex8:
-      return hexaToRgba(color);
+      return hex8ToRgba(color);
     case colorType === colorTypes.rgba:
       return rgbaToRgba(color);
     case colorType === colorTypes.rgb:
@@ -153,4 +153,4 @@ const toRgba = (color: string, colorType: colorTypes) => {
   }
 };
 
-export { hexaToRgba, hslaToRgba, rgbaToRgba, toRgba };
+export { hex8ToRgba, hslaToRgba, rgbaToRgba, toRgba };

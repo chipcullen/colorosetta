@@ -63,9 +63,26 @@ const rgbToHsl = (rgb: string): Array<number> => {
   return rgbArrayToHsl(rgbNumberArray);
 }
 
+const hslToHsl = (hsl: string): Array<number> => {
+  const sep = hsl.indexOf(",") > -1 ? "," : " ";
+
+  const hslArray: Array<string> = hsl
+    .substr(4)
+    .split(")")[0]
+    .split(sep);
+
+  const h = parseInt(hslArray[0]);
+  const s = parseInt(hslArray[1].substr(0, hslArray[1].length - 1));
+  const l = parseInt(hslArray[2].substr(0, hslArray[2].length - 1));
+
+  // @todo add support for deg, rad, turn
+
+  return [h, s, l];
+};
+
 const hex6ToHsl = (hex:string) => {
   // Then to HSL
   return rgbArrayToHsl(hexToRgb(hex));
 }
 
-export { rgbToHsl, hex6ToHsl }
+export { rgbToHsl, hex6ToHsl, hslToHsl, rgbArrayToHsl };

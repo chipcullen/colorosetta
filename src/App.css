@@ -17,6 +17,10 @@
   display: flex;
   flex-direction: column;
 }
+
+input {
+  width: 200px;
+}
 .swatch {
   display: inline-block;
   width: 100px;

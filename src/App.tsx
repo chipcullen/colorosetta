@@ -2,7 +2,6 @@ import * as React from 'react';
 import './App.css';
 import { useQueryString } from "./utils/useQueryString";
 import { colorTypes } from './utils/colorTypes';
-import { toRgba } from './utils/toRgba';
 import { typeOfColor } from './utils/typeOfColor';
 import { Swatch } from './components/Swatch';
 import { Input } from './components/Input';
@@ -84,17 +83,9 @@ const App: React.FC = () => {
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}
         />
-
-
-
         {
-        // @todo
-        // rgb
-        // rgba
-        // hex
-        // hex8
-        // named
-}
+        // @todo named
+        }
       </section>
     </div>
   );

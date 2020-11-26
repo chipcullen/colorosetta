@@ -1,13 +1,16 @@
+import { ASSUMED_BACKGROUND_COLOR } from '../constants';
+
 const channelResult = (fg: number, bg: number, alpha:number): number => {
   return Math.floor(alpha * fg + (1 - alpha) * bg);
 };
 
-const calculateOverlay = (foreGroundRgba: Array<number>, backgroundRgb: Array<number>): Array<number> => {
+const calculateOverlay = (foreGroundRgba: Array<number>): Array<number> => {
   const fgR = foreGroundRgba[0];
   const fgG = foreGroundRgba[1];
   const fgB = foreGroundRgba[2];
   const fgA = foreGroundRgba[3];
 
+  const backgroundRgb: Array<number> = ASSUMED_BACKGROUND_COLOR;
   const bgR = backgroundRgb[0];
   const bgG = backgroundRgb[1];
   const bgB = backgroundRgb[2];

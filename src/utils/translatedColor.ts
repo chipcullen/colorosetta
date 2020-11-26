@@ -71,7 +71,7 @@ const translatedColor = (
     // Hex 8
     case startingColorType === colorTypes.hex8:
       const hex8AsRgbaArray = hex8ToRgba(color);
-      const hex8Overlay = calculateOverlay(hex8AsRgbaArray, [255, 255, 255]);
+      const hex8Overlay = calculateOverlay(hex8AsRgbaArray);
       switch(true) {
         case targetColorType === colorTypes.hex6:
           return rgbArrayToHex(hex8Overlay);
@@ -111,7 +111,7 @@ const translatedColor = (
     // RGBA
     case startingColorType === colorTypes.rgba:
       const rgbaAsRgbaArray = rgbaToRgba(color);
-      const rgbaOverlay = calculateOverlay(rgbaAsRgbaArray, [255, 255, 255]);
+      const rgbaOverlay = calculateOverlay(rgbaAsRgbaArray);
       switch(true) {
         case targetColorType === colorTypes.hex6:
           return rgbArrayToHex(rgbaOverlay);
@@ -151,7 +151,7 @@ const translatedColor = (
     // HSLA
     case startingColorType === colorTypes.hsla:
       const hslaAsRgbArray = hslaToRgba(color);
-      const hslaOverlay = calculateOverlay(hslaAsRgbArray, [255, 255, 255])
+      const hslaOverlay = calculateOverlay(hslaAsRgbArray)
       switch(true) {
         case targetColorType === colorTypes.hex6:
           return rgbArrayToHex(hslaOverlay);

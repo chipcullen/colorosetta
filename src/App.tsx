@@ -5,12 +5,11 @@ import { colorTypes } from './utils/colorTypes';
 import { typeOfColor } from './utils/typeOfColor';
 import { Swatch } from './components/Swatch';
 import { Input } from './components/Input';
+import { DEFAULT_COLOR } from './constants';
 
 
 const App: React.FC = () => {
-
-  const defaultRgba = `rgba(255, 0, 0, 1)`;
-  const [colorQp, setColorQp] = useQueryString("color", defaultRgba);
+  const [colorQp, setColorQp] = useQueryString("color", DEFAULT_COLOR);
 
   const onInputChange = (value: string) => {
     setColorQp(value);
@@ -51,7 +50,7 @@ const App: React.FC = () => {
         <Input
           labelText="rgb"
           colorType={colorTypes.rgb}
-          placeHolder="hsl(120, 100%, 50%)"
+          placeHolder="rgb(255, 0, 0)"
           onChange={onInputChange}
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}
@@ -60,7 +59,7 @@ const App: React.FC = () => {
         <Input
           labelText="rgba"
           colorType={colorTypes.rgba}
-          placeHolder="#ffffff"
+          placeHolder="rgba(255, 0, 0, 1)"
           onChange={onInputChange}
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}
@@ -69,7 +68,7 @@ const App: React.FC = () => {
         <Input
           labelText="hsl"
           colorType={colorTypes.hsl}
-          placeHolder="#ffffff"
+          placeHolder="hsl(100, 100%, 50%)"
           onChange={onInputChange}
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}
@@ -78,7 +77,7 @@ const App: React.FC = () => {
         <Input
           labelText="hsla"
           colorType={colorTypes.hsla}
-          placeHolder="#ffffff"
+          placeHolder="hsla(100, 100%, 50%, 1)"
           onChange={onInputChange}
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}
@@ -92,9 +91,6 @@ const App: React.FC = () => {
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}
         />
-        {
-        // @todo named
-        }
       </section>
 
 

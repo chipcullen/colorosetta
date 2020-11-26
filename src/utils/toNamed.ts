@@ -17,7 +17,7 @@ const rgbToNamed = (rgb: Array<number>): string => {
 const rgbaToNamed = (rgba: Array<number>): string => {
   // let color = ``;
 
-  if (rgba[3] == 1) {
+  if (rgba[3] === 1) {
     return rgbToNamed([rgba[0], rgba[1], rgba[2]])
   }
 

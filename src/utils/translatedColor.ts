@@ -1,16 +1,22 @@
 import { colorTypes } from './colorTypes';
-import { hexToRgb, rgbToRgb, hslToRgb } from './toRgb';
+import { hexToRgb, rgbToRgb, hslToRgb, namedToRgb } from './toRgb';
 import { rgbaToRgba, hex8ToRgba, hslaToRgba } from './toRgba';
 import { rgbToHex, hslToHex, rgbArrayToHex } from './toHex';
 import { rgbaToHex8, hslaToHex8 } from './toHex8';
 import { rgbToHsl, hex6ToHsl, hslToHsl, rgbArrayToHsl } from './toHsl';
 import { rgbaToHsla, hex8ToHsla } from './toHsla';
+import { rgbToNamed, rgbaToNamed } from './toNamed';
 import { calculateOverlay } from './calculateOverlay';
 
 const formatHex6AsHex8 = (hex: string) => {
   // normalizing the presence of a hex value
+  // by removing it if it's there
   const hexstring = hex.indexOf(`#`) === 0 ? hex.slice(1): hex;
-  return `#${hexstring.toLowerCase()}ff`;
+  if (hexstring.length === 3){
+    return `#${hexstring.toLowerCase()}f`;
+  } else {
+    return `#${hexstring.toLowerCase()}ff`;
+  }
 }
 
 const formatRgb = (rgb:Array<Number>) => {
@@ -56,6 +62,8 @@ const translatedColor = (
           return formatHsl(hex6ToHsl(color));
         case targetColorType === colorTypes.hsla:
           return formatHslAsHsla(hex6ToHsl(color));
+        case targetColorType === colorTypes.named:
+          return rgbToNamed(hexToRgb(color));
         default:
           break;
       }
@@ -75,6 +83,8 @@ const translatedColor = (
           return formatHsl(rgbArrayToHsl(hex8Overlay));
         case targetColorType === colorTypes.hsla:
           return formatHsla(hex8ToHsla(color));
+        case targetColorType === colorTypes.named:
+          return rgbaToNamed(hex8AsRgbaArray);
         default:
           break;
       }
@@ -92,6 +102,8 @@ const translatedColor = (
           return formatHsl(rgbToHsl(color));
         case targetColorType === colorTypes.hsla:
           return formatHslAsHsla(rgbToHsl(color));
+        case targetColorType === colorTypes.named:
+          return rgbToNamed(rgbToRgb(color));
         default:
           break;
       }
@@ -111,6 +123,8 @@ const translatedColor = (
           return formatHsl(rgbArrayToHsl(rgbaOverlay));
         case targetColorType === colorTypes.hsla:
           return formatHsla(rgbaToHsla(color));
+        case targetColorType === colorTypes.named:
+          return rgbaToNamed(rgbaAsRgbaArray);
         default:
           break;
       }
@@ -128,6 +142,8 @@ const translatedColor = (
           return formatRgbAsRgba(hslToRgb(color));
         case targetColorType === colorTypes.hsla:
           return formatHslAsHsla(hslToHsl(color));
+        case targetColorType === colorTypes.named:
+          return rgbToNamed(hslToRgb(color));
         default:
           break;
       }
@@ -147,6 +163,29 @@ const translatedColor = (
           return formatRgba(hslaAsRgbArray);
         case targetColorType === colorTypes.hsl:
           return formatHsl(rgbArrayToHsl(hslaOverlay));
+        case targetColorType === colorTypes.named:
+          return rgbaToNamed(hslaAsRgbArray);
+        default:
+          break;
+      }
+      break;
+    // Named
+    case startingColorType === colorTypes.named:
+      const namedAsRgbArray = namedToRgb(color);
+
+      switch(true) {
+        case targetColorType === colorTypes.hex6:
+          return rgbArrayToHex(namedAsRgbArray);
+        case targetColorType === colorTypes.hex8:
+          return formatHex6AsHex8(rgbArrayToHex(namedAsRgbArray));
+        case targetColorType === colorTypes.rgb:
+          return formatRgb(namedAsRgbArray);
+        case targetColorType === colorTypes.rgba:
+          return formatRgbAsRgba(namedAsRgbArray);
+        case targetColorType === colorTypes.hsl:
+          return formatHsl(rgbArrayToHsl(namedAsRgbArray));
+        case targetColorType === colorTypes.hsla:
+          return formatHslAsHsla(rgbArrayToHsl(namedAsRgbArray));
         default:
           break;
       }

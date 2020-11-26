@@ -11,7 +11,9 @@ const Swatch: React.FC<SwatchProps> = props => {
 
 
   return (
-    <div className="swatch" style={{ backgroundColor: color}}></div>
+    <div className="swatch-wrapper">
+      <div className="swatch" style={{ backgroundColor: color}}></div>
+    </div>
   );
 };
 

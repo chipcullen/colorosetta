@@ -83,10 +83,21 @@ const App: React.FC = () => {
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}
         />
+
+        <Input
+          labelText="named"
+          colorType={colorTypes.named}
+          placeHolder="RebeccaPurple"
+          onChange={onInputChange}
+          incomingColor={incomingColor}
+          incomingColorType={incomingColorType}
+        />
         {
         // @todo named
         }
       </section>
+
+
     </div>
   );
 }

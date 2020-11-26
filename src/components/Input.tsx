@@ -43,7 +43,9 @@ const Input: React.FC<InputProps> = props => {
   const translatedIncomingColor = translatedColor(incomingColor, incomingColorType, colorType);
 
 
-  if (!focus && translatedIncomingColor !== colorTypes.none && translatedIncomingColor !== value) {
+  if (!focus &&
+    translatedIncomingColor !== colorTypes.none &&
+    translatedIncomingColor !== value) {
     setValue(translatedIncomingColor);
   }
 

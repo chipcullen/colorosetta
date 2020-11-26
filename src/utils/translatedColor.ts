@@ -172,7 +172,6 @@ const translatedColor = (
     // Named
     case startingColorType === colorTypes.named:
       const namedAsRgbArray = namedToRgb(color);
-
       switch(true) {
         case targetColorType === colorTypes.hex6:
           return rgbArrayToHex(namedAsRgbArray);

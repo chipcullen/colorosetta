@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 
 // import { ColorContext } from '../utils/ColorContext';
 import { colorTypes } from '../utils/colorTypes';
@@ -15,6 +15,16 @@ type InputProps = {
   incomingColorType: colorTypes;
 };
 
+enum inputStates {
+  empty = `empty`,
+  inFocus = `inFocus`,
+  inFocusValidValue = `inFocusValidValue`,
+  inFocusInvalidValue = `inFocusInvalidValue`,
+  onBlurValidValue = `onBlurValidValue`,
+  onBlurInvalidValue = `onBlurInvalidValue`,
+  outOfFocus = `outOfFocus`,
+}
+
 const Input: React.FC<InputProps> = props => {
 
   const {
@@ -22,28 +32,46 @@ const Input: React.FC<InputProps> = props => {
   } = props;
 
   const [value, setValue] = useState(incomingColor);
-  const [focus, setFocus] = useState(false);
+  const [inputState, setInputState] = useState(inputStates.outOfFocus);
 
   const localChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
     const changedValue = e.currentTarget.value;
     setValue(changedValue);
 
     if (isValidColor(changedValue, colorType)) {
-      // console.log('valid color');
+      setInputState(inputStates.inFocusValidValue);
       onChange(changedValue);
     } else {
-      // console.log('not valid color');
+      setInputState(inputStates.inFocusInvalidValue);
     }
   }
 
-  // if this input is not in focus, and the color context is different
-  // set value
+  const blurHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    const changedValue = e.currentTarget.value;
+    if (isValidColor(changedValue, colorType)) {
+      setInputState(inputStates.outOfFocus);
+    } else {
+      setInputState(inputStates.onBlurInvalidValue);
+      // setInputState(inputStates.outOfFocus);
+    }
+  }
 
-  // const incomingColorType = typeOfColor(color);
   const translatedIncomingColor = translatedColor(incomingColor, incomingColorType, colorType);
 
+  useEffect(() => {
+    console.log(translatedIncomingColor);
+    if (inputState === inputStates.onBlurInvalidValue &&
+    translatedIncomingColor !== colorTypes.none &&
+    translatedIncomingColor !== value) {
+      setValue(translatedIncomingColor);
+      setInputState(inputStates.outOfFocus);
+    }
+  // disabling this because we only want to update when
+  // translatedIncomingColor changes, but not value or inputState
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [translatedIncomingColor]);
 
-  if (!focus &&
+  if (inputState === inputStates.outOfFocus &&
     translatedIncomingColor !== colorTypes.none &&
     translatedIncomingColor !== value) {
     setValue(translatedIncomingColor);
@@ -56,8 +84,8 @@ const Input: React.FC<InputProps> = props => {
         type="text"
         placeholder={placeHolder}
         onChange={localChangeHandler}
-        onFocus={(e) => setFocus(true)}
-        onBlur={(e) => setFocus(false)}
+        onFocus={() => setInputState(inputStates.inFocus)}
+        onBlur={blurHandler}
         value={value}
         name={colorType}
       />

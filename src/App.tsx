@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
   const incomingColor = colorQp ? colorQp.toString() : ``;
   const incomingColorType = typeOfColor(incomingColor);
-
+  console.log(incomingColor)
   return (
     <div className="App">
       <header className="App-header">

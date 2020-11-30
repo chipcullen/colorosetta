@@ -79,7 +79,9 @@ const Input: React.FC<InputProps> = props => {
 
   return (
     <label>
+      <span className="label-text">
       {labelText}:
+      </span>
       <input
         type="text"
         placeholder={placeHolder}

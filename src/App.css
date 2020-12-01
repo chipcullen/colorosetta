@@ -48,7 +48,7 @@ label {
 }
 
 input {
-  width: clamp(12.5rem, 22vw, 25rem);
+  width: clamp(12.5rem, 25vw, 30rem);
   font-size: clamp(1rem, 2vw, 2rem);
   padding: 1.2vw;
   border: 3px solid black;

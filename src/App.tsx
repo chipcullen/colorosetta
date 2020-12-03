@@ -21,7 +21,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>ColouRosetta</h1>
+        <h1>ColoRosetta</h1>
         <p>A utility to translate colors</p>
       </header>
 

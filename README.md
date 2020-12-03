@@ -1,8 +1,8 @@
-# colourosetta
+# colorosetta
 
-![CI](https://github.com/chipcullen/colourosetta/workflows/CI/badge.svg)
+![CI](https://github.com/chipcullen/colorosetta/workflows/CI/badge.svg)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/54dd2d7f-b4fe-497d-9558-915ad50cb725/deploy-status)](https://app.netlify.com/sites/colourosetta/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/54dd2d7f-b4fe-497d-9558-915ad50cb725/deploy-status)](https://app.netlify.com/sites/colorosetta/deploys)
 
 A simple utility to help translate color names
 

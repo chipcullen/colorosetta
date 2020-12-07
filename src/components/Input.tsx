@@ -1,9 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 
-// import { ColorContext } from '../utils/ColorContext';
 import { colorTypes } from '../utils/colorTypes';
 import { isValidColor } from '../utils/isValidColor';
-// import { typeOfColor } from '../utils/typeOfColor';
 import { translatedColor } from '../utils/translatedColor';
 
 type InputProps = {

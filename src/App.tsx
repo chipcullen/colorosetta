@@ -3,6 +3,7 @@ import './App.css';
 import { useQueryString } from "./utils/useQueryString";
 import { colorTypes } from './utils/colorTypes';
 import { typeOfColor } from './utils/typeOfColor';
+import { colorFavicon } from './utils/colorFavicon';
 import { Swatch } from './components/Swatch';
 import { Input } from './components/Input';
 import { DEFAULT_COLOR } from './constants';
@@ -17,6 +18,7 @@ const App: React.FC = () => {
 
   const incomingColor = colorQp ? colorQp.toString() : ``;
   const incomingColorType = typeOfColor(incomingColor);
+  colorFavicon(incomingColor, incomingColorType);
 
   return (
     <div className="App">

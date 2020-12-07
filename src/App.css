@@ -1,7 +1,6 @@
 .App {
   font-family: "Work Sans", Helvetica, sans-serif;
   text-align: center;
-
 }
 
 .App-header {
@@ -47,7 +46,7 @@ label {
   text-align: right;
 }
 
-input {
+input[type=text] {
   width: clamp(12.5rem, 25vw, 30rem);
   font-size: clamp(1rem, 2vw, 2rem);
   padding: 1.2vw;
@@ -55,8 +54,14 @@ input {
   background: white;
   margin-bottom: 2rem;
   margin-left: 1vw;
-  font-family: sans-serif;
+  font-family: "Work Sans", Helvetica, sans-serif;
   transition: border-color ease-in .2s, border-radius ease-in .2s, background-color ease-in .2s;
+}
+
+input[type=color] {
+  margin-bottom: 2rem;
+  margin-left: 1vw;
+  margin-right: 24.5vw; /* magic number */
 }
 
 input:focus {

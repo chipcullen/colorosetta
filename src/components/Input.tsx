@@ -59,7 +59,6 @@ const Input: React.FC<InputProps> = props => {
   const translatedIncomingColor = translatedColor(incomingColor, incomingColorType, colorType);
 
   useEffect(() => {
-    console.log(translatedIncomingColor);
     if (inputState === inputStates.onBlurInvalidValue &&
     translatedIncomingColor !== colorTypes.none &&
     translatedIncomingColor !== value) {
@@ -77,13 +76,15 @@ const Input: React.FC<InputProps> = props => {
     setValue(translatedIncomingColor);
   }
 
+  const inputType = colorType === colorTypes.picker ? `color` : `text`;
+
   return (
     <label>
       <span className="label-text">
       {labelText}:
       </span>
       <input
-        type="text"
+        type={inputType}
         placeholder={placeHolder}
         onChange={localChangeHandler}
         onFocus={() => setInputState(inputStates.inFocus)}

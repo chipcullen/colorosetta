@@ -51,7 +51,13 @@ const translatedColor = (
   switch(true) {
     // Hex 6
     case startingColorType === colorTypes.hex6:
+    case startingColorType === colorTypes.picker:
       switch(true) {
+        // because pickers use hex 6, we need to include these both
+        // in their own case
+        case targetColorType === colorTypes.hex6:
+        case targetColorType === colorTypes.picker:
+          return color;
         case targetColorType === colorTypes.hex8:
           return formatHex6AsHex8(color);
         case targetColorType === colorTypes.rgb:
@@ -74,6 +80,7 @@ const translatedColor = (
       const hex8Overlay = calculateOverlay(hex8AsRgbaArray);
       switch(true) {
         case targetColorType === colorTypes.hex6:
+        case targetColorType === colorTypes.picker:
           return rgbArrayToHex(hex8Overlay);
         case targetColorType === colorTypes.rgb:
           return formatRgb(hex8Overlay);
@@ -93,6 +100,7 @@ const translatedColor = (
     case startingColorType === colorTypes.rgb:
       switch(true) {
         case targetColorType === colorTypes.hex6:
+        case targetColorType === colorTypes.picker:
           return rgbToHex(color);
         case targetColorType === colorTypes.hex8:
           return formatHex6AsHex8(rgbToHex(color));
@@ -114,6 +122,7 @@ const translatedColor = (
       const rgbaOverlay = calculateOverlay(rgbaAsRgbaArray);
       switch(true) {
         case targetColorType === colorTypes.hex6:
+        case targetColorType === colorTypes.picker:
           return rgbArrayToHex(rgbaOverlay);
         case targetColorType === colorTypes.hex8:
           return rgbaToHex8(color);
@@ -133,6 +142,7 @@ const translatedColor = (
     case startingColorType === colorTypes.hsl:
       switch(true) {
         case targetColorType === colorTypes.hex6:
+        case targetColorType === colorTypes.picker:
           return hslToHex(color);
         case targetColorType === colorTypes.hex8:
           return formatHex6AsHex8(hslToHex(color));
@@ -154,6 +164,7 @@ const translatedColor = (
       const hslaOverlay = calculateOverlay(hslaAsRgbArray)
       switch(true) {
         case targetColorType === colorTypes.hex6:
+        case targetColorType === colorTypes.picker:
           return rgbArrayToHex(hslaOverlay);
         case targetColorType === colorTypes.hex8:
           return hslaToHex8(color);
@@ -174,6 +185,7 @@ const translatedColor = (
       const namedAsRgbArray = namedToRgb(color);
       switch(true) {
         case targetColorType === colorTypes.hex6:
+        case targetColorType === colorTypes.picker:
           return rgbArrayToHex(namedAsRgbArray);
         case targetColorType === colorTypes.hex8:
           return formatHex6AsHex8(rgbArrayToHex(namedAsRgbArray));

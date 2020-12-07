@@ -6,5 +6,6 @@ export enum colorTypes {
   hsl = `hsl`,
   hsla = `hsla`,
   named = `named`,
+  picker = `picker`,
   none = `none`,
 }

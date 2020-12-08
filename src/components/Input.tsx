@@ -50,7 +50,6 @@ const Input: React.FC<InputProps> = props => {
       setInputState(inputStates.outOfFocus);
     } else {
       setInputState(inputStates.onBlurInvalidValue);
-      // setInputState(inputStates.outOfFocus);
     }
   }
 
@@ -74,24 +73,43 @@ const Input: React.FC<InputProps> = props => {
     setValue(translatedIncomingColor);
   }
 
-  const inputType = colorType === colorTypes.picker ? `color` : `text`;
-
-  return (
-    <label>
-      <span className="label-text">
-      {labelText}:
-      </span>
-      <input
-        type={inputType}
-        placeholder={placeHolder}
-        onChange={localChangeHandler}
-        onFocus={() => setInputState(inputStates.inFocus)}
-        onBlur={blurHandler}
-        value={value}
-        name={colorType}
-      />
-    </label>
-  );
+  if (colorType === colorTypes.picker) {
+    return (
+      <label>
+        <span className="label-text">
+        {labelText}:
+        </span>
+        <div className="color-input-wrapper">
+          <input
+            type="color"
+            placeholder={placeHolder}
+            onChange={localChangeHandler}
+            onFocus={() => setInputState(inputStates.inFocus)}
+            onBlur={blurHandler}
+            value={value}
+            name={colorType}
+          />
+        </div>
+      </label>
+    );
+  } else {
+    return (
+      <label>
+        <span className="label-text">
+        {labelText}:
+        </span>
+        <input
+          type="text"
+          placeholder={placeHolder}
+          onChange={localChangeHandler}
+          onFocus={() => setInputState(inputStates.inFocus)}
+          onBlur={blurHandler}
+          value={value}
+          name={colorType}
+        />
+      </label>
+    );
+  }
 };
 
 export { Input };

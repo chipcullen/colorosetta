@@ -4,7 +4,6 @@
 }
 
 .App-header {
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,10 +57,18 @@ input[type=text] {
   transition: border-color ease-in .2s, border-radius ease-in .2s, background-color ease-in .2s;
 }
 
-input[type=color] {
+.color-input-wrapper {
+  width: clamp(12.5rem, 25vw, 30rem);
+  display: inline-block;
+  padding: calc(1.2vw + 3px);
   margin-bottom: 2rem;
   margin-left: 1vw;
-  margin-right: 24.5vw; /* magic number */
+  text-align: left;
+}
+
+input[type=color] {
+  position: relative;
+  left: -1.2vw;
 }
 
 input:focus {

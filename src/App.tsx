@@ -6,6 +6,7 @@ import { typeOfColor } from './utils/typeOfColor';
 import { colorFavicon } from './utils/colorFavicon';
 import { Swatch } from './components/Swatch';
 import { Input } from './components/Input';
+import { Footer } from './components/Footer';
 import { DEFAULT_COLOR } from './constants';
 
 
@@ -103,8 +104,7 @@ const App: React.FC = () => {
           incomingColorType={incomingColorType}
         />
       </section>
-
-
+      <Footer />
     </div>
   );
 }

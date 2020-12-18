@@ -7,10 +7,10 @@ const Footer: React.FC = () => {
         &copy; {new Date().getFullYear()}{" "}
         <a href="https://chipcullen.com">
           chip cullen</a> |{" "}
-        {/* <a href="https://chipcullen.com/the-contrast-triangle/">
+        <a href="https://chipcullen.com/colorosetta/">
           explanatory blog post
         </a>{" "}
-        |{" "} */}
+        |{" "}
         <a href="https://github.com/chipcullen/colorosetta">
           this project on github
         </a>{" "}

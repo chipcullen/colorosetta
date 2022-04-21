@@ -1,5 +1,5 @@
 import { colorTypes } from './colorTypes';
-import { hexToRgb, hslToRgb, rgbToRgb, toRgb } from "./toRgb";
+import { hexToRgb, hslToRgb, rgbToRgb, namedToRgb, toRgb } from "./toRgb";
 
 describe("Hex to RGB conversion", () => {
   it("correct rgb for black", () => {
@@ -70,6 +70,20 @@ describe("rgb to RGB conversion", () => {
     expect(rgbToRgb("rgb(255, 255, 255)")[0]).toBe(255);
     expect(rgbToRgb("rgb(255, 255, 255)")[1]).toBe(255);
     expect(rgbToRgb("rgb(255, 255, 255)")[2]).toBe(255);
+  });
+});
+
+describe("Named to RGB conversion", () => {
+  it("correct rgb for black", () => {
+    expect(namedToRgb("black")[0]).toBe(0);
+    expect(namedToRgb("black")[1]).toBe(0);
+    expect(namedToRgb("black")[2]).toBe(0);
+  });
+
+  it("correct rgb for white", () => {
+    expect(namedToRgb("white")[0]).toBe(255);
+    expect(namedToRgb("white")[1]).toBe(255);
+    expect(namedToRgb("white")[2]).toBe(255);
   });
 });
 

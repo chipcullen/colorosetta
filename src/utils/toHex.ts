@@ -1,4 +1,5 @@
 import { typeOfColor } from "./typeOfColor";
+import { namedToRgb } from "./toRgb";
 
 // normalizes non-alpha hex values
 // handles 000, #000, 000000 or #000000
@@ -132,18 +133,7 @@ const rgbArrayToHex = (rgb: Array<number>) => {
 };
 
 const namedToHex = (name:string) => {
-  // Create fake div
-  let fakeDiv = document.createElement("div");
-  fakeDiv.style.color = name;
-  document.body.appendChild(fakeDiv);
-
-  // Get color of div
-  let cs = window.getComputedStyle(fakeDiv);
-  let pv = cs.getPropertyValue("color");
-
-  // Remove div after obtaining desired color value
-  document.body.removeChild(fakeDiv);
-  return rgbToHex(pv);
+  return rgbArrayToHex(namedToRgb(name));
 };
 
 const toHex = (color:string) => {

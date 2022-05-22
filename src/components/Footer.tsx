@@ -4,6 +4,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer>
+        <strong><a href="https://marketplace.visualstudio.com/items?itemName=chipcullen.colorosetta">now available as a VS Code Extension!</a></strong><br />
         &copy; {new Date().getFullYear()}{" "}
         <a href="https://chipcullen.com">
           chip cullen</a> |{" "}

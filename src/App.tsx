@@ -25,7 +25,7 @@ const App: React.FC = () => {
     <div className="App">
       <header className="App-header">
         <h1>ColoRosetta</h1>
-        <p>A utility to translate colors</p>
+        <p>A utility to translate colors <a href="https://marketplace.visualstudio.com/items?itemName=chipcullen.colorosetta">(now as a VS Code Extension!)</a></p>
       </header>
 
       <Swatch color={incomingColor} />

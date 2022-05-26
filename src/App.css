@@ -62,6 +62,9 @@ input[type=text] {
   transition: border-color ease-in .2s, border-radius ease-in .2s, background-color ease-in .2s;
 }
 
+input[type=text][name=lch] {
+  width: clamp(12.5rem, 55vw, 35rem);
+}
 .color-input-wrapper {
   width: clamp(12.5rem, 25vw, 30rem);
   display: inline-block;

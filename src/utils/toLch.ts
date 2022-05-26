@@ -45,11 +45,6 @@ const rgbToLch = (rgb: string): Array<number> => {
   return lch;
 }
 
-const rgbArrayToLch = (rgb: Array<number>): Array<number> => {
-  return rgb_array_to_LCH(rgb);
-}
-
-
 const rgbaToLch = (rgba: string): Array<number> => {
   let sep = rgba.indexOf(",") > -1 ? "," : " ";
 

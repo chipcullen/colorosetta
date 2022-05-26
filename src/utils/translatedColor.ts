@@ -8,6 +8,7 @@ import { rgbaToHsla, hex8ToHsla } from './toHsla';
 import { hex6ToLch, hex8ToLch, hslToLch, hslaToLch, rgbaToLch, rgbToLch } from './toLch';
 import { rgbToNamed, rgbaToNamed } from './toNamed';
 import { calculateOverlay } from './calculateOverlay';
+import { rgb_array_to_LCH } from './w3conversions';
 
 const formatHex6AsHex8 = (hex: string) => {
   // normalizing the presence of a hex value
@@ -175,8 +176,8 @@ const translatedColor = (
       break;
     // HSLA
     case startingColorType === colorTypes.hsla:
-      const hslaAsRgbArray = hslaToRgba(color);
-      const hslaOverlay = calculateOverlay(hslaAsRgbArray)
+      const hslaAsRgbaArray = hslaToRgba(color);
+      const hslaOverlay = calculateOverlay(hslaAsRgbaArray)
       switch(true) {
         case targetColorType === colorTypes.hex6:
         case targetColorType === colorTypes.picker:
@@ -186,13 +187,13 @@ const translatedColor = (
         case targetColorType === colorTypes.rgb:
           return formatRgb(hslaOverlay);
         case targetColorType === colorTypes.rgba:
-          return formatRgba(hslaAsRgbArray);
+          return formatRgba(hslaAsRgbaArray);
         case targetColorType === colorTypes.hsl:
           return formatHsl(rgbArrayToHsl(hslaOverlay));
         case targetColorType === colorTypes.lch:
           return formatLch(hslaToLch(color));
         case targetColorType === colorTypes.named:
-          return rgbaToNamed(hslaAsRgbArray);
+          return rgbaToNamed(hslaAsRgbaArray);
         default:
           break;
       }
@@ -214,6 +215,8 @@ const translatedColor = (
           return formatHsl(rgbArrayToHsl(namedAsRgbArray));
         case targetColorType === colorTypes.hsla:
           return formatHslAsHsla(rgbArrayToHsl(namedAsRgbArray));
+        case targetColorType === colorTypes.lch:
+          return formatLch(rgb_array_to_LCH(namedAsRgbArray));
         default:
           break;
       }

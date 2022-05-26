@@ -54,17 +54,13 @@ const stringToHue = (input: string): Hue => {
   }
 };
 
-// @TODO untangle this type
-const hslaToRgba = (hslaArg: any): number[] => {
+const hslaToRgba = (hslaArg: string): number[] => {
   const sep: string = hslaArg.indexOf(",") > -1 ? "," : " ";
 
   const hsla: any = hslaArg
     .substr(5)
     .split(")")[0]
     .split(sep);
-
-  // console.log(typeof hsla);
-  // console.log(hsla);
 
   if (hsla.indexOf("/") > -1) hsla.splice(3, 1);
 

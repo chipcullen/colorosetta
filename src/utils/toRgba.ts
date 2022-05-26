@@ -1,5 +1,6 @@
 import { colorTypes } from './colorTypes';
 import { toRgb } from './toRgb';
+import { LCH_to_sRGB, LCH_to_sRGB_string } from './w3conversions';
 
 // handles #0000 or #00000000
 // based on this function: https://css-tricks.com/converting-color-spaces-in-javascript/#article-header-id-3
@@ -112,10 +113,30 @@ const hslaToRgba = (hslaArg: string): number[] => {
   return [+r, +g, +b, +a];
 };
 
-const rgbaToRgba = (rgba: any) => {
-  const sep = rgba.indexOf(",") > -1 ? "," : " ";
+const lchToRgba = (color: string) => {
+  const sep = color.indexOf(",") > -1 ? "," : " ";
 
-  rgba = rgba
+  const lchArray: Array<string> = color
+    .substr(4)
+    .split(")")[0]
+    .split(sep);
+
+  const l = lchArray[0].replace("%", "");
+  const c = lchArray[1];
+  const h = lchArray[2];
+  const a = lchArray[3] === '/' ? parseInt(lchArray[4].replace("%", "")) : 1;
+
+  const lchNumArray = [+l, +c, +h, +a];
+
+  console.log(LCH_to_sRGB(lchNumArray))
+  console.log(LCH_to_sRGB_string(l, c, h, a))
+  return LCH_to_sRGB(lchNumArray);
+}
+
+const rgbaToRgba = (color: string): Array<number> => {
+  const sep = color.indexOf(",") > -1 ? "," : " ";
+
+  const rgba: Array<string> = color
     .substr(5)
     .split(")")[0]
     .split(sep);
@@ -149,4 +170,4 @@ const toRgba = (color: string, colorType: colorTypes) => {
   }
 };
 
-export { hex8ToRgba, hslaToRgba, rgbaToRgba, toRgba };
+export { hex8ToRgba, hslaToRgba, lchToRgba, rgbaToRgba, toRgba };

@@ -6,7 +6,6 @@
 // https://drafts.csswg.org/css-color-4/utilities.js
 // https://github.com/LeaVerou/css.land/blob/master/lch/lch.js
 
-
 /**
  * Simple matrix (and vector) multiplication
  * Warning: No error handling for incompatible dimensions!
@@ -304,4 +303,4 @@ const rgb_array_to_LCH = (rgb) => {
   ]
 }
 
-export { LCH_to_sRGB_string, sRGB_to_LCH,  rgb_array_to_LCH }
+export { LCH_to_sRGB, LCH_to_sRGB_string, sRGB_to_LCH,  rgb_array_to_LCH }

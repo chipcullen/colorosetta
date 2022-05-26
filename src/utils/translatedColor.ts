@@ -5,7 +5,7 @@ import { rgbToHex, hslToHex, rgbArrayToHex } from './toHex';
 import { rgbaToHex8, hslaToHex8 } from './toHex8';
 import { rgbToHsl, hex6ToHsl, hslToHsl, rgbArrayToHsl } from './toHsl';
 import { rgbaToHsla, hex8ToHsla } from './toHsla';
-import { rgbToLch, rgbaToLch } from './toLch';
+import { hex6ToLch, hex8ToLch, hslToLch, hslaToLch, rgbaToLch, rgbToLch } from './toLch';
 import { rgbToNamed, rgbaToNamed } from './toNamed';
 import { calculateOverlay } from './calculateOverlay';
 
@@ -73,6 +73,8 @@ const translatedColor = (
           return formatHsl(hex6ToHsl(color));
         case targetColorType === colorTypes.hsla:
           return formatHslAsHsla(hex6ToHsl(color));
+        case targetColorType === colorTypes.lch:
+          return formatLch(hex6ToLch(color));
         case targetColorType === colorTypes.named:
           return rgbToNamed(hexToRgb(color));
         default:
@@ -95,6 +97,8 @@ const translatedColor = (
           return formatHsl(rgbArrayToHsl(hex8Overlay));
         case targetColorType === colorTypes.hsla:
           return formatHsla(hex8ToHsla(color));
+        case targetColorType === colorTypes.lch:
+          return formatLch(hex8ToLch(color));
         case targetColorType === colorTypes.named:
           return rgbaToNamed(hex8AsRgbaArray);
         default:
@@ -161,6 +165,8 @@ const translatedColor = (
           return formatRgbAsRgba(hslToRgb(color));
         case targetColorType === colorTypes.hsla:
           return formatHslAsHsla(hslToHsl(color));
+        case targetColorType === colorTypes.lch:
+          return formatLch(hslToLch(color));
         case targetColorType === colorTypes.named:
           return rgbToNamed(hslToRgb(color));
         default:
@@ -183,6 +189,8 @@ const translatedColor = (
           return formatRgba(hslaAsRgbArray);
         case targetColorType === colorTypes.hsl:
           return formatHsl(rgbArrayToHsl(hslaOverlay));
+        case targetColorType === colorTypes.lch:
+          return formatLch(hslaToLch(color));
         case targetColorType === colorTypes.named:
           return rgbaToNamed(hslaAsRgbArray);
         default:

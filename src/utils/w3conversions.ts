@@ -839,8 +839,6 @@ function CSS_color_to_LCH(str) {
 const rgb_array_to_LCH = (rgb) => {
 
   let params = rgb.map((x, i) => i < 3? x/255 : x);
-
-
   var lch = sRGB_to_LCH(params.slice(0, 3));
 
   return [

@@ -5,7 +5,7 @@ export const useQueryString = (key:string, initialValue?: string) => {
   const [value, setValue] = useState(getQueryStringValue(key) || initialValue);
 
   const onSetValue = useCallback(
-    newValue => {
+    (newValue: string) => {
       setValue(newValue);
       setQueryStringValue(key, newValue)
     },

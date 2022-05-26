@@ -5,6 +5,7 @@ import { rgbToHex, hslToHex, rgbArrayToHex } from './toHex';
 import { rgbaToHex8, hslaToHex8 } from './toHex8';
 import { rgbToHsl, hex6ToHsl, hslToHsl, rgbArrayToHsl } from './toHsl';
 import { rgbaToHsla, hex8ToHsla } from './toHsla';
+import { rgbaToLch } from './toLch';
 import { rgbToNamed, rgbaToNamed } from './toNamed';
 import { calculateOverlay } from './calculateOverlay';
 
@@ -41,6 +42,10 @@ const formatHsla = (hsla:Array<Number>) => {
 
 const formatHslAsHsla = (hsl:Array<Number>) => {
   return `hsla(${hsl[0]}, ${hsl[1]}%, ${hsl[2]}%, 1)`;
+}
+
+const formatLch = (lch:Array<Number>) => {
+  return `lch(${lch[0]}% ${lch[1]} ${lch[2]} / ${lch[3]})`;
 }
 
 const translatedColor = (
@@ -132,6 +137,8 @@ const translatedColor = (
           return formatHsl(rgbArrayToHsl(rgbaOverlay));
         case targetColorType === colorTypes.hsla:
           return formatHsla(rgbaToHsla(color));
+        case targetColorType === colorTypes.lch:
+          return formatLch(rgbaToLch(color));
         case targetColorType === colorTypes.named:
           return rgbaToNamed(rgbaAsRgbaArray);
         default:

@@ -87,6 +87,15 @@ const App: React.FC = () => {
         />
 
         <Input
+          labelText="lch"
+          colorType={colorTypes.lch}
+          placeHolder="lch(54.291% 106.837 40.858 / 1)"
+          onChange={onInputChange}
+          incomingColor={incomingColor}
+          incomingColorType={incomingColorType}
+        />
+
+        <Input
           labelText="named"
           colorType={colorTypes.named}
           placeHolder="RebeccaPurple"

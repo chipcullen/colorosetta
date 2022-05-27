@@ -1,3 +1,4 @@
+import { colorStringToArray } from './colorStringToArray';
 import { colorTypes } from './colorTypes';
 import { toRgb } from './toRgb';
 import { LCH_to_RGB_array } from './w3conversions';
@@ -113,13 +114,8 @@ const hslaToRgba = (hslaArg: string): number[] => {
   return [+r, +g, +b, +a];
 };
 
-const lchToRgba = (color: string): Array<number> => {
-  const sep = color.indexOf(",") > -1 ? "," : " ";
-
-  const lchArray: Array<string> = color
-    .substr(4)
-    .split(")")[0]
-    .split(sep);
+const lchToRgba = (lch: string): Array<number> => {
+  const lchArray = colorStringToArray(lch) as Array<string>
 
   const l = lchArray[0].replace("%","");
   const c = lchArray[1];
@@ -134,19 +130,7 @@ const lchToRgba = (color: string): Array<number> => {
 }
 
 const rgbaToRgba = (color: string): Array<number> => {
-  const sep = color.indexOf(",") > -1 ? "," : " ";
-
-  const rgba: Array<string> = color
-    .substr(5)
-    .split(")")[0]
-    .split(sep);
-
-  const r = rgba[0];
-  const g = rgba[1];
-  const b = rgba[2];
-  const a = rgba[3];
-
-  return [+r, +g, +b, +a];
+  return colorStringToArray(color, true, 5) as Array<number>;
 };
 
 const toRgba = (color: string, colorType: colorTypes) => {

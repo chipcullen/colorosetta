@@ -1,3 +1,4 @@
+import { colorStringToArray } from './colorStringToArray';
 import { rgbArrayToHsl } from './toHsl';
 
 const rgbaArrayToHsla = (rgba: Array<number>): Array<number> => {
@@ -12,13 +13,7 @@ const rgbaArrayToHsla = (rgba: Array<number>): Array<number> => {
 }
 
 const rgbaToHsla = (rgba: string): Array<number> => {
-  let sep = rgba.indexOf(",") > -1 ? "," : " ";
-
-  // Turn "rgb(r,g,b,a)" into [r,g,b,a]
-  const rgbaArray: Array<string> = rgba
-    .substr(5)
-    .split(")")[0]
-    .split(sep);
+  const rgbaArray = colorStringToArray(rgba, false, 5) as Array<string>
 
   const rgbNumberArray = [parseInt(rgbaArray[0]), parseInt(rgbaArray[1]), parseInt(rgbaArray[2]), parseFloat(rgbaArray[3])]
 

@@ -1,5 +1,7 @@
 import * as React from "react";
 import { colorTypes } from '../utils/colorTypes';
+import { toRgba } from '../utils/toRgba';
+import { formatColor } from '../utils/formatColor';
 
 type SwatchProps = {
   color: string;
@@ -12,21 +14,32 @@ const Swatch: React.FC<SwatchProps> = props => {
     colorType
   } = props;
 
-  console.log(color);
-  console.log(colorType);
+  if (colorType === colorTypes.lch) {
+    // react doesn't support lch colors, so we have to use dangerouslySetInnerHTML
+    const rgbaFallback = formatColor(toRgba(color, colorType), colorTypes.rgba);
+    return (
+      <div className="swatch-wrapper">
+        <div className="swatch"></div>
+        <small className="lch-warning">Your browser doesn't support lch colors; using rgba approximation</small>
+        <style dangerouslySetInnerHTML={{__html: `
+          .swatch {
+            background-color: ${rgbaFallback};
+            background-color: ${color};
+          }
 
-  return (
-    <div className="swatch-wrapper">
-      <div className="swatch" ></div>
-
-
-      <style dangerouslySetInnerHTML={{__html: `
-        .swatch {
-          background-color: ${color}
-        }
-      `}} />
-    </div>
-  );
+          @supports(color: lch(100% 0 0)) {
+            .lch-warning { display: none}
+          }
+        `}} />
+      </div>
+    );
+  } else {
+    return (
+      <div className="swatch-wrapper">
+        <div className="swatch" style={{ backgroundColor: color}}></div>
+      </div>
+    );
+  }
 };
 
 export { Swatch };

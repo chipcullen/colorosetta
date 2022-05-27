@@ -315,4 +315,4 @@ const rgb_array_to_LCH = (rgb) => {
   ]
 }
 
-export { LCH_to_sRGB, LCH_to_RGB_array, LCH_to_sRGB_string, sRGB_to_LCH,  rgb_array_to_LCH }
+export { LCH_to_sRGB, LCH_to_RGB_array, isLCH_within_sRGB, LCH_to_sRGB_string, sRGB_to_LCH,  rgb_array_to_LCH }

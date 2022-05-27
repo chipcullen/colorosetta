@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 
 import { colorTypes } from '../utils/colorTypes';
+import { isLchOutOfRgbGamut } from "../utils/isLchOutOfRgbGamut";
 import { isValidColor } from '../utils/isValidColor';
 import { translatedColor } from '../utils/translatedColor';
 
@@ -17,6 +18,7 @@ enum inputStates {
   empty = `empty`,
   inFocus = `inFocus`,
   inFocusValidValue = `inFocusValidValue`,
+  inFocusValidValueOutOfGamut = `inFocusValidValueOutOfGamut`,
   inFocusInvalidValue = `inFocusInvalidValue`,
   onBlurValidValue = `onBlurValidValue`,
   onBlurInvalidValue = `onBlurInvalidValue`,
@@ -24,7 +26,6 @@ enum inputStates {
 }
 
 const Input: React.FC<InputProps> = props => {
-
   const {
     labelText, placeHolder, onChange, colorType, incomingColor, incomingColorType
   } = props;
@@ -36,8 +37,12 @@ const Input: React.FC<InputProps> = props => {
     const changedValue = e.currentTarget.value;
     setValue(changedValue);
 
-    if (isValidColor(changedValue, colorType)) {
-      setInputState(inputStates.inFocusValidValue);
+   if (isValidColor(changedValue, colorType)) {
+      if (colorType === colorTypes.lch && isLchOutOfRgbGamut(changedValue)) {
+        setInputState(inputStates.inFocusValidValueOutOfGamut);
+      } else {
+        setInputState(inputStates.inFocusValidValue);
+      }
       onChange(changedValue);
     } else {
       setInputState(inputStates.inFocusInvalidValue);
@@ -94,6 +99,7 @@ const Input: React.FC<InputProps> = props => {
     );
   } else {
     return (
+      <>
       <label>
         <span className="label-text">
         {labelText}:
@@ -108,6 +114,10 @@ const Input: React.FC<InputProps> = props => {
           name={colorType}
         />
       </label>
+      { inputState === inputStates.inFocusValidValueOutOfGamut &&
+        <small>This lch value is outside the RGB gamut; translated values are approximated</small>
+      }
+      </>
     );
   }
 };

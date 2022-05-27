@@ -23,6 +23,7 @@ enum inputStates {
   onBlurValidValue = `onBlurValidValue`,
   onBlurInvalidValue = `onBlurInvalidValue`,
   outOfFocus = `outOfFocus`,
+  outOfFocusOutOfGamut = `outOfFocusOutOfGamut`,
 }
 
 const Input: React.FC<InputProps> = props => {
@@ -30,8 +31,17 @@ const Input: React.FC<InputProps> = props => {
     labelText, placeHolder, onChange, colorType, incomingColor, incomingColorType
   } = props;
 
+  const initInputState = () => {
+    // show the gamut warning on load
+    if (colorType === colorTypes.lch && isLchOutOfRgbGamut(incomingColor)) {
+      return inputStates.outOfFocusOutOfGamut
+    } else {
+      return inputStates.outOfFocus
+    }
+  }
+
   const [value, setValue] = useState(incomingColor);
-  const [inputState, setInputState] = useState(inputStates.outOfFocus);
+  const [inputState, setInputState] = useState(initInputState());
 
   const localChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
     const changedValue = e.currentTarget.value;
@@ -78,6 +88,8 @@ const Input: React.FC<InputProps> = props => {
     setValue(translatedIncomingColor);
   }
 
+  const showGamutWarning = inputState === inputStates.inFocusValidValueOutOfGamut || inputState === inputStates.outOfFocusOutOfGamut
+
   if (colorType === colorTypes.picker) {
     return (
       <label>
@@ -114,7 +126,7 @@ const Input: React.FC<InputProps> = props => {
           name={colorType}
         />
       </label>
-      { inputState === inputStates.inFocusValidValueOutOfGamut &&
+      { showGamutWarning &&
         <small>This lch value is outside the RGB gamut; translated values are approximated</small>
       }
       </>

@@ -121,15 +121,19 @@ const lchToRgba = (color: string) => {
     .split(")")[0]
     .split(sep);
 
+  const alpha = lchArray[3] === '/' ? parseInt(lchArray[4].replace("%", "")) / 100 : 1;
+
+  console.log(alpha)
+
   const l = lchArray[0].replace("%", "");
   const c = lchArray[1];
   const h = lchArray[2];
-  const a = lchArray[3] === '/' ? parseInt(lchArray[4].replace("%", "")) : 1;
+  const a = alpha;
 
-  const lchNumArray = [+l, +c, +h, +a];
+  const lchNumArray = [+l, +c, +h];
 
-  console.log(LCH_to_sRGB(lchNumArray))
-  console.log(LCH_to_sRGB_string(l, c, h, a))
+  const rgbPercArray = LCH_to_sRGB(lchNumArray);
+
   return LCH_to_sRGB(lchNumArray);
 }
 

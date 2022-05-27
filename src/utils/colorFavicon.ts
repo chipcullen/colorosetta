@@ -20,6 +20,11 @@ const colorFavicon = (incomingColor: string, incomingColorType: colorTypes) => {
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, 32, 32);
     link.href = canvas.toDataURL("image/x-icon");
+
+    const meta: HTMLMetaElement = document.querySelector("meta[name='theme-color']") || document.createElement('meta');
+    meta.name = "theme-color";
+    document.getElementsByTagName('head')[0].appendChild(meta);
+    meta.content = color;
 }
 
 export { colorFavicon }

@@ -257,6 +257,18 @@ function LCH_to_sRGB_string(l, c, h, a = 100, forceInGamut = false) {
 	}).join(" ") + alpha_to_string(a) + ")";
 }
 
+function LCH_to_RGB_array(l, c, h) {
+  [l, c, h] = force_into_gamut(l, c, h, isLCH_within_sRGB);
+
+  let rgbArray = [];
+
+	LCH_to_sRGB([+l, +c, +h]).map(x => {
+		return rgbArray.push(parseInt(Math.round(x * 255)));
+	})
+
+  return rgbArray;
+}
+
 function force_into_gamut(l, c, h, isLCH_within) {
 	// Moves an lch color into the sRGB gamut
 	// by holding the l and h steady,
@@ -303,4 +315,4 @@ const rgb_array_to_LCH = (rgb) => {
   ]
 }
 
-export { LCH_to_sRGB, LCH_to_sRGB_string, sRGB_to_LCH,  rgb_array_to_LCH }
+export { LCH_to_sRGB, LCH_to_RGB_array, LCH_to_sRGB_string, sRGB_to_LCH,  rgb_array_to_LCH }

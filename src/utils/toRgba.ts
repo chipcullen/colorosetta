@@ -1,6 +1,6 @@
 import { colorTypes } from './colorTypes';
 import { toRgb } from './toRgb';
-import { LCH_to_sRGB, LCH_to_sRGB_string } from './w3conversions';
+import { LCH_to_RGB_array } from './w3conversions';
 
 // handles #0000 or #00000000
 // based on this function: https://css-tricks.com/converting-color-spaces-in-javascript/#article-header-id-3
@@ -113,7 +113,7 @@ const hslaToRgba = (hslaArg: string): number[] => {
   return [+r, +g, +b, +a];
 };
 
-const lchToRgba = (color: string) => {
+const lchToRgba = (color: string): Array<number> => {
   const sep = color.indexOf(",") > -1 ? "," : " ";
 
   const lchArray: Array<string> = color
@@ -121,20 +121,16 @@ const lchToRgba = (color: string) => {
     .split(")")[0]
     .split(sep);
 
-  const alpha = lchArray[3] === '/' ? parseInt(lchArray[4].replace("%", "")) / 100 : 1;
-
-  console.log(alpha)
-
-  const l = lchArray[0].replace("%", "");
+  const l = lchArray[0].replace("%","");
   const c = lchArray[1];
   const h = lchArray[2];
-  const a = alpha;
 
-  const lchNumArray = [+l, +c, +h];
+  const rgbaArray = LCH_to_RGB_array(+l, +c, +h);
 
-  const rgbPercArray = LCH_to_sRGB(lchNumArray);
-
-  return LCH_to_sRGB(lchNumArray);
+  // if we have an alpha value, else supply 1
+  const alpha: string = lchArray[3] === '/' ? (parseInt(lchArray[4].replace("%", "")) / 100).toFixed(2) : '1';
+  rgbaArray.push(parseFloat(alpha));
+  return rgbaArray;
 }
 
 const rgbaToRgba = (color: string): Array<number> => {
@@ -167,6 +163,8 @@ const toRgba = (color: string, colorType: colorTypes) => {
       return hslaToRgba(color);
     case colorType === colorTypes.hsl:
       return toRgb(color, colorType).concat([1]);
+    case colorType === colorTypes.lch:
+      return lchToRgba(color);
     case colorType === colorTypes.named:
       return toRgb(color, colorType).concat([1]);
     default:

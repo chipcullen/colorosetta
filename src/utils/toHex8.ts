@@ -43,4 +43,4 @@ const hslaToHex8 = (hsla: string) => {
 }
 
 
-export { rgbaToHex8, hslaToHex8 };
+export { rgbaArrayToHex8, rgbaToHex8, hslaToHex8 };

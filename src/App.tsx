@@ -28,7 +28,7 @@ const App: React.FC = () => {
         <p>A utility to translate colors <a href="https://marketplace.visualstudio.com/items?itemName=chipcullen.colorosetta">(now as a VS Code Extension!)</a></p>
       </header>
 
-      <Swatch color={incomingColor} />
+      <Swatch color={incomingColor} colorType={incomingColorType} />
 
       <section className="inputs">
 

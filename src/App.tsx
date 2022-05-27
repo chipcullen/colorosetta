@@ -104,6 +104,7 @@ const App: React.FC = () => {
           incomingColorType={incomingColorType}
         />
       </section>
+      <section className="lch-input">
         <Input
           labelText="lch"
           colorType={colorTypes.lch}
@@ -112,6 +113,7 @@ const App: React.FC = () => {
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}
         />
+      </section>
       <Footer />
     </div>
   );

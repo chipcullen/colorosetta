@@ -18,9 +18,10 @@ const Swatch: React.FC<SwatchProps> = props => {
     // react doesn't support lch colors, so we have to use dangerouslySetInnerHTML
     const rgbaFallback = formatColor(toRgba(color, colorType), colorTypes.rgba);
     return (
+      <>
       <div className="swatch-wrapper">
         <div className="swatch"></div>
-        <small className="lch-warning">Your browser doesn't support lch colors; using rgba approximation</small>
+
         <style dangerouslySetInnerHTML={{__html: `
           .swatch {
             background-color: ${rgbaFallback};
@@ -32,6 +33,10 @@ const Swatch: React.FC<SwatchProps> = props => {
           }
         `}} />
       </div>
+      <small className="lch-warning">
+        ℹ️ Your browser doesn't support lch colors; showing rgba approximation
+      </small>
+      </>
     );
   } else {
     return (

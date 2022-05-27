@@ -1,10 +1,13 @@
 :root {
   --black: #333;
   --swatch-size: clamp(6.25rem, 10vw, 12.5rem);
-    --gray: #cccccc;
-  }
+  --gray: #cccccc;
+  --input-width: clamp(12.5rem, 34vw, 35rem);
+    --label-offset: clamp(4.5rem, 9vw, 9rem);
+}
 
 .App {
+  padding-inline: 2vw;
   font-family: "Work Sans", Helvetica, sans-serif;
   text-align: center;
   color: var(--black);
@@ -26,7 +29,8 @@ p {
   margin: 2vw auto;
 }
 
-.inputs {
+.inputs,
+.lch-input {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -34,10 +38,15 @@ p {
 }
 
 @media (min-width: 75rem) {
+  .lch-input {
+      left: 0;
+    }
   .inputs {
     display: block;
     columns: 2;
+    left: 0;
   }
+
 
 }
 
@@ -48,12 +57,12 @@ label {
 
 .label-text {
   display: inline-block;
-  width: clamp(4.5rem, 9vw, 9rem);
+  width: var(--label-offset);
   text-align: right;
 }
 
 input[type=text] {
-  width: clamp(12.5rem, 25vw, 30rem);
+  width: var(--input-width);
   font-size: clamp(1rem, 2vw, 2rem);
   padding: 1.2vw;
   border: 3px solid var(--black);
@@ -64,16 +73,12 @@ input[type=text] {
   transition: border-color ease-in .2s, border-radius ease-in .2s, background-color ease-in .2s;
 }
 
-input[type=text][name=lch] {
-  width: clamp(12.5rem, 55vw, 35rem);
-}
-
 .color-input-wrapper {
-  width: clamp(12.5rem, 25vw, 30rem);
+  width: var(--input-width);
   display: inline-block;
-  padding: calc(1.2vw + 3px);
+  /* padding: calc(1.2vw + 3px); */
   margin-bottom: 2rem;
-  margin-left: 1vw;
+  margin-left: calc(2.2vw + 16px);
   text-align: left;
 }
 
@@ -96,7 +101,7 @@ input:focus {
   --neg-half-square: calc((var(--swatch-size) / 10) * -1);
   display: inline-block;
   position: relative;
-  margin-bottom: 2vw;
+  margin-bottom: 3rem;
   width: var(--swatch-size);
   height: var(--swatch-size);
   background-image:
@@ -130,6 +135,22 @@ input:focus {
   position: relative;
 }
 
+.lch-warning {
+  display: block;
+  position: absolute;
+  margin-top: -2rem;
+  width: 100%;
+  text-align: center;
+}
+
+.gamut-warning {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 100%;
+  padding-inline-start: var(--label-offset);
+  position: relative;
+  top: -1rem;
+}
 
 footer {
   padding: 3vw;

@@ -92,6 +92,7 @@ const Input: React.FC<InputProps> = props => {
 
   if (colorType === colorTypes.picker) {
     return (
+      <div className="input-wrapper">
       <label>
         <span className="label-text">
         {labelText}:
@@ -108,10 +109,11 @@ const Input: React.FC<InputProps> = props => {
           />
         </div>
       </label>
+      </div>
     );
   } else {
     return (
-      <>
+      <div className="input-wrapper">
       <label>
         <span className="label-text">
         {labelText}:
@@ -127,9 +129,9 @@ const Input: React.FC<InputProps> = props => {
         />
       </label>
       { showGamutWarning &&
-        <small>This lch value is outside the RGB gamut; translated values are approximated</small>
+        <small className="gamut-warning">⚠️ This lch value is outside the RGB gamut; translated values are approximated</small>
       }
-      </>
+      </div>
     );
   }
 };

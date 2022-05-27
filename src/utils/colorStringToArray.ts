@@ -1,6 +1,6 @@
 // Turn "rgb(r,g,b)" into [r,g,b]
 const colorStringToArray = (colorString: string, returnNum=false, index=4): Array<string> | Array<number> => {
-  let sep = colorString.indexOf(",") > -1 ? "," : " ";
+  let sep = colorString.indexOf(",") > -1 ? ", " : " ";
 
   let colorArray: Array<string> = colorString
     .substring(index)

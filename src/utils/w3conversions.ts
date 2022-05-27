@@ -303,16 +303,11 @@ function isLCH_within_sRGB(l, c, h) {
 	return rgb.reduce((a, b) => a && b >= (0 - ε) && b <= (1 + ε), true);
 }
 
-const rgb_array_to_LCH = (rgb) => {
-
+const rgb_array_to_LCH = (rgb: Array<number>): Array<number> => {
   let params = rgb.map((x, i) => i < 3? x/255 : x);
   var lch = sRGB_to_LCH(params.slice(0, 3));
 
-  return [
-    lch[0].toFixed(3),
-    lch[1].toFixed(3),
-    lch[2].toFixed(3)
-  ]
+	return lch.map((x) => parseFloat(x.toFixed(3)));
 }
 
 export { LCH_to_sRGB, LCH_to_RGB_array, isLCH_within_sRGB, LCH_to_sRGB_string, sRGB_to_LCH,  rgb_array_to_LCH }

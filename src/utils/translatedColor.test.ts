@@ -11,8 +11,8 @@ describe('translatedColor', () => {
     expect(translatedColor(`rgb(255, 0, 0)`, colorTypes.rgb, colorTypes.named)).toBe(`Red`);
     expect(translatedColor(`rgb(255, 0, 0)`, colorTypes.rgb, colorTypes.hsl)).toBe('hsl(0, 100%, 50%)');
     expect(translatedColor(`hsl(200, 66%, 75%)`, colorTypes.hsl, colorTypes.hex6)).toBe('#95cde9');
-
-    // Note: we cannot test starting with named colors, as the translation requires
-    // DOM that jest doesn't have
+    expect(translatedColor(`lch(54.291% 106.837 40.858)`, colorTypes.lch, colorTypes.hex6)).toBe('#ff0000');
+    expect(translatedColor(`lch(54.291% 106.837 40.858 / 50%)`, colorTypes.lch, colorTypes.hex8)).toBe('#ff000080');
+    expect(translatedColor(`red`, colorTypes.named, colorTypes.hex6)).toBe('#ff0000');
   });
 });

@@ -1,6 +1,8 @@
-root: {
+:root {
   --black: #999999;
-;}
+  --swatch-size: clamp(6.25rem, 10vw, 12.5rem);
+    --gray: #cccccc;
+  }
 
 .App {
   font-family: "Work Sans", Helvetica, sans-serif;
@@ -54,7 +56,7 @@ input[type=text] {
   width: clamp(12.5rem, 25vw, 30rem);
   font-size: clamp(1rem, 2vw, 2rem);
   padding: 1.2vw;
-  border: 3px solid black;
+  border: 3px solid var(--black);
   background: white;
   margin-bottom: 2rem;
   margin-left: 1vw;
@@ -65,6 +67,7 @@ input[type=text] {
 input[type=text][name=lch] {
   width: clamp(12.5rem, 55vw, 35rem);
 }
+
 .color-input-wrapper {
   width: clamp(12.5rem, 25vw, 30rem);
   display: inline-block;
@@ -86,12 +89,8 @@ input:focus {
   background-color: hsla(60, 100%, 50%, 0.2);
 }
 
-:root {
-  --swatch-size: clamp(6.25rem, 10vw, 12.5rem);
-}
 
 .swatch-wrapper {
-  --gray: #cccccc;
   --square-size: calc(var(--swatch-size) / 5);
   --half-square: calc(var(--swatch-size) / 10);
   --neg-half-square: calc((var(--swatch-size) / 10) * -1);

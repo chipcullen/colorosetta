@@ -1,16 +1,16 @@
-import { colorTypes } from "./colorTypes";
+import { ColorTypes } from "./colorTypes";
 
-const formatColor = (arr: Array<number>, formatColorType: colorTypes): string => {
+const formatColor = (arr: Array<number>, formatColorType: ColorTypes): string => {
   switch (true) {
-    case formatColorType === colorTypes.rgb:
+    case formatColorType === ColorTypes.rgb:
       return `rgb(${arr[0]}, ${arr[1]}, ${arr[2]})`;
-    case formatColorType === colorTypes.rgba:
+    case formatColorType === ColorTypes.rgba:
       return `rgba(${arr[0]}, ${arr[1]}, ${arr[2]}, ${arr[3] ? arr[3] : 1})`;
-    case formatColorType === colorTypes.hsl:
+    case formatColorType === ColorTypes.hsl:
       return `hsl(${arr[0]}, ${arr[1]}%, ${arr[2]}%)`;
-    case formatColorType === colorTypes.hsla:
+    case formatColorType === ColorTypes.hsla:
       return `hsla(${arr[0]}, ${arr[1]}%, ${arr[2]}%, ${arr[3] ? arr[3] : 1})`;
-    case formatColorType === colorTypes.lch:
+    case formatColorType === ColorTypes.lch:
       return `lch(${arr[0]}% ${arr[1]} ${arr[2]}${arr[3] && arr[3] !== 100 ? ` / ${arr[3]}%` : ''})`;
     default:
       break;

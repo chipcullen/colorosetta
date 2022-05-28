@@ -1,4 +1,4 @@
-import { colorTypes } from './colorTypes';
+import { ColorTypes } from './colorTypes';
 import { hexToRgb, hslToRgb, rgbToRgb, namedToRgb, toRgb } from "./toRgb";
 
 describe("Hex to RGB conversion", () => {
@@ -90,16 +90,16 @@ describe("Named to RGB conversion", () => {
 // integration
 describe("To RGB conversion", () => {
   it("correct rgb for black", () => {
-    expect(toRgb("hsl(0, 0%, 0%)", colorTypes.hsl)).toEqual([0, 0, 0]);
-    expect(toRgb("rgb(0, 0, 0)", colorTypes.rgb)).toEqual([0, 0, 0]);
-    expect(toRgb("#000", colorTypes.hex6)).toEqual([0, 0, 0]);
-    expect(toRgb("000", colorTypes.hex6)).toEqual([0, 0, 0]);
+    expect(toRgb("hsl(0, 0%, 0%)", ColorTypes.hsl)).toEqual([0, 0, 0]);
+    expect(toRgb("rgb(0, 0, 0)", ColorTypes.rgb)).toEqual([0, 0, 0]);
+    expect(toRgb("#000", ColorTypes.hex6)).toEqual([0, 0, 0]);
+    expect(toRgb("000", ColorTypes.hex6)).toEqual([0, 0, 0]);
   });
 
   it("correct rgb for white", () => {
-    expect(toRgb("hsl(0, 0%, 100%)", colorTypes.hsl)).toEqual([255, 255, 255]);
-    expect(toRgb("rgb(255, 255, 255)", colorTypes.rgb)).toEqual([255, 255, 255]);
-    expect(toRgb("#fff", colorTypes.hex6)).toEqual([255, 255, 255]);
-    expect(toRgb("fff", colorTypes.hex6)).toEqual([255, 255, 255]);
+    expect(toRgb("hsl(0, 0%, 100%)", ColorTypes.hsl)).toEqual([255, 255, 255]);
+    expect(toRgb("rgb(255, 255, 255)", ColorTypes.rgb)).toEqual([255, 255, 255]);
+    expect(toRgb("#fff", ColorTypes.hex6)).toEqual([255, 255, 255]);
+    expect(toRgb("fff", ColorTypes.hex6)).toEqual([255, 255, 255]);
   });
 });

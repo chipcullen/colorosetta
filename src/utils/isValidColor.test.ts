@@ -1,5 +1,5 @@
 import { isValidColor, isValidHex6, isValidHex8, isValidRgb, isValidRgba, isValidHsl, isValidHsla, isValidLch } from './isValidColor';
-import { colorTypes } from './colorTypes';
+import { ColorTypes } from './colorTypes';
 
 
 describe('isValidHex6', () => {
@@ -111,22 +111,22 @@ describe('isValidLch', () => {
 // bringing it all together now
 describe('isValidColor', () => {
   it('return true for valid colors', () => {
-    expect(isValidColor('purple', colorTypes.named)).toBe(true);
-    expect(isValidColor('#ffffff', colorTypes.hex6)).toBe(true);
-    expect(isValidColor('#ffffffff', colorTypes.hex8)).toBe(true);
-    expect(isValidColor('hsla(100, 100%, 100%, 0.5)', colorTypes.hsla)).toBe(true);
-    expect(isValidColor('hsl(100, 100%, 100%)', colorTypes.hsl)).toBe(true);
-    expect(isValidColor('rgba(100, 100, 100, 0.5)', colorTypes.rgba)).toBe(true);
-    expect(isValidColor('rgb(100, 100, 100)', colorTypes.rgb)).toBe(true);
+    expect(isValidColor('purple', ColorTypes.named)).toBe(true);
+    expect(isValidColor('#ffffff', ColorTypes.hex6)).toBe(true);
+    expect(isValidColor('#ffffffff', ColorTypes.hex8)).toBe(true);
+    expect(isValidColor('hsla(100, 100%, 100%, 0.5)', ColorTypes.hsla)).toBe(true);
+    expect(isValidColor('hsl(100, 100%, 100%)', ColorTypes.hsl)).toBe(true);
+    expect(isValidColor('rgba(100, 100, 100, 0.5)', ColorTypes.rgba)).toBe(true);
+    expect(isValidColor('rgb(100, 100, 100)', ColorTypes.rgb)).toBe(true);
   });
 
     it('return false for invalid colors', () => {
-    expect(isValidColor('purplee', colorTypes.named)).toBe(false);
-    expect(isValidColor('#ffffff', colorTypes.hex8)).toBe(false);
-    expect(isValidColor('#fffffff', colorTypes.hex6)).toBe(false);
-    expect(isValidColor('hsla(100, 100%, 100%, 0.5)', colorTypes.rgba)).toBe(false);
-    expect(isValidColor('hsl(100, 100%, 100)', colorTypes.hsl)).toBe(false);
-    expect(isValidColor('rgba(100, 100%, 100, 0.5)', colorTypes.rgba)).toBe(false);
-    expect(isValidColor('rgb(100, 100, 100)', colorTypes.rgba)).toBe(false);
+    expect(isValidColor('purplee', ColorTypes.named)).toBe(false);
+    expect(isValidColor('#ffffff', ColorTypes.hex8)).toBe(false);
+    expect(isValidColor('#fffffff', ColorTypes.hex6)).toBe(false);
+    expect(isValidColor('hsla(100, 100%, 100%, 0.5)', ColorTypes.rgba)).toBe(false);
+    expect(isValidColor('hsl(100, 100%, 100)', ColorTypes.hsl)).toBe(false);
+    expect(isValidColor('rgba(100, 100%, 100, 0.5)', ColorTypes.rgba)).toBe(false);
+    expect(isValidColor('rgb(100, 100, 100)', ColorTypes.rgba)).toBe(false);
   });
 });

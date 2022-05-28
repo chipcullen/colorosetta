@@ -1,4 +1,4 @@
-export enum colorTypes {
+export enum ColorTypes {
   rgb = `rgb`,
   rgba = `rgba`,
   hex6 = `hex6`,

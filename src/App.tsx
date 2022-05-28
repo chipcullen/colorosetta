@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
 import { useQueryString } from "./utils/useQueryString";
-import { colorTypes } from './utils/colorTypes';
+import { ColorTypes } from './utils/colorTypes';
 import { typeOfColor } from './utils/typeOfColor';
 import { colorFavicon } from './utils/colorFavicon';
 import { Swatch } from './components/Swatch';
@@ -34,7 +34,7 @@ const App: React.FC = () => {
 
         <Input
           labelText="hex6"
-          colorType={colorTypes.hex6}
+          colorType={ColorTypes.hex6}
           placeHolder="#ffffff"
           onChange={onInputChange}
           incomingColor={incomingColor}
@@ -43,7 +43,7 @@ const App: React.FC = () => {
 
         <Input
           labelText="hex8"
-          colorType={colorTypes.hex8}
+          colorType={ColorTypes.hex8}
           placeHolder="#ffffffff"
           onChange={onInputChange}
           incomingColor={incomingColor}
@@ -52,7 +52,7 @@ const App: React.FC = () => {
 
         <Input
           labelText="rgb"
-          colorType={colorTypes.rgb}
+          colorType={ColorTypes.rgb}
           placeHolder="rgb(255, 0, 0)"
           onChange={onInputChange}
           incomingColor={incomingColor}
@@ -61,7 +61,7 @@ const App: React.FC = () => {
 
         <Input
           labelText="rgba"
-          colorType={colorTypes.rgba}
+          colorType={ColorTypes.rgba}
           placeHolder="rgba(255, 0, 0, 1)"
           onChange={onInputChange}
           incomingColor={incomingColor}
@@ -70,7 +70,7 @@ const App: React.FC = () => {
 
         <Input
           labelText="hsl"
-          colorType={colorTypes.hsl}
+          colorType={ColorTypes.hsl}
           placeHolder="hsl(100, 100%, 50%)"
           onChange={onInputChange}
           incomingColor={incomingColor}
@@ -79,7 +79,7 @@ const App: React.FC = () => {
 
         <Input
           labelText="hsla"
-          colorType={colorTypes.hsla}
+          colorType={ColorTypes.hsla}
           placeHolder="hsla(100, 100%, 50%, 1)"
           onChange={onInputChange}
           incomingColor={incomingColor}
@@ -88,7 +88,7 @@ const App: React.FC = () => {
 
         <Input
           labelText="named"
-          colorType={colorTypes.named}
+          colorType={ColorTypes.named}
           placeHolder="RebeccaPurple"
           onChange={onInputChange}
           incomingColor={incomingColor}
@@ -97,7 +97,7 @@ const App: React.FC = () => {
 
         <Input
           labelText="picker"
-          colorType={colorTypes.picker}
+          colorType={ColorTypes.picker}
           placeHolder=""
           onChange={onInputChange}
           incomingColor={incomingColor}
@@ -107,7 +107,7 @@ const App: React.FC = () => {
       <section className="lch-input">
         <Input
           labelText="lch"
-          colorType={colorTypes.lch}
+          colorType={ColorTypes.lch}
           placeHolder="lch(54.291% 106.837 40.858 / 1)"
           onChange={onInputChange}
           incomingColor={incomingColor}

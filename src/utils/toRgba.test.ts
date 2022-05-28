@@ -1,4 +1,4 @@
-import { colorTypes } from './colorTypes';
+import { ColorTypes } from './colorTypes';
 
 import { hex8ToRgba, hslaToRgba, rgbaToRgba, toRgba } from "./toRgba";
 
@@ -90,22 +90,22 @@ describe("rgba to RGBA conversion", () => {
 // integration
 describe("To RGBA conversion", () => {
   it("correct rgba for black", () => {
-    expect(toRgba("hsla(0, 0%, 0%, 1)", colorTypes.hsla)).toEqual([0, 0, 0, 1]);
-    expect(toRgba("rgba(0, 0, 0, 1)", colorTypes.rgba)).toEqual([0, 0, 0, 1]);
-    expect(toRgba("#000000ff", colorTypes.hex8)).toEqual([0, 0, 0, 1]);
-    expect(toRgba("#00000000", colorTypes.hex8)).toEqual([0, 0, 0, 0]);
+    expect(toRgba("hsla(0, 0%, 0%, 1)", ColorTypes.hsla)).toEqual([0, 0, 0, 1]);
+    expect(toRgba("rgba(0, 0, 0, 1)", ColorTypes.rgba)).toEqual([0, 0, 0, 1]);
+    expect(toRgba("#000000ff", ColorTypes.hex8)).toEqual([0, 0, 0, 1]);
+    expect(toRgba("#00000000", ColorTypes.hex8)).toEqual([0, 0, 0, 0]);
   });
 
   it("correct rgba for white", () => {
-      expect(toRgba("hsla(0, 0%, 100%, 1)", colorTypes.hsla)).toEqual([255, 255, 255, 1]);
-      expect(toRgba("rgba(255, 255, 255, 1)", colorTypes.rgba)).toEqual([255, 255, 255, 1]);
-      expect(toRgba("#ffffffff", colorTypes.hex8)).toEqual([255, 255, 255, 1]);
-      expect(toRgba("#ffffff00", colorTypes.hex8)).toEqual([255, 255, 255, 0]);
+      expect(toRgba("hsla(0, 0%, 100%, 1)", ColorTypes.hsla)).toEqual([255, 255, 255, 1]);
+      expect(toRgba("rgba(255, 255, 255, 1)", ColorTypes.rgba)).toEqual([255, 255, 255, 1]);
+      expect(toRgba("#ffffffff", ColorTypes.hex8)).toEqual([255, 255, 255, 1]);
+      expect(toRgba("#ffffff00", ColorTypes.hex8)).toEqual([255, 255, 255, 0]);
   });
 
   it("get rgba for colors without alpha channels", () => {
-      expect(toRgba("hsl(0, 0%, 100%)", colorTypes.hsl)).toEqual([255, 255, 255, 1]);
-      expect(toRgba("rgb(255, 255, 255)", colorTypes.rgb)).toEqual([255, 255, 255, 1]);
-      expect(toRgba("#ffffff", colorTypes.hex6)).toEqual([255, 255, 255, 1]);
+      expect(toRgba("hsl(0, 0%, 100%)", ColorTypes.hsl)).toEqual([255, 255, 255, 1]);
+      expect(toRgba("rgb(255, 255, 255)", ColorTypes.rgb)).toEqual([255, 255, 255, 1]);
+      expect(toRgba("#ffffff", ColorTypes.hex6)).toEqual([255, 255, 255, 1]);
   });
 });

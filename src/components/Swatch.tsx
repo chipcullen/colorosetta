@@ -1,11 +1,11 @@
 import * as React from "react";
-import { colorTypes } from '../utils/colorTypes';
+import { ColorTypes } from '../utils/colorTypes';
 import { toRgba } from '../utils/toRgba';
 import { formatColor } from '../utils/formatColor';
 
 type SwatchProps = {
   color: string;
-  colorType: colorTypes;
+  colorType: ColorTypes;
 };
 
 const Swatch: React.FC<SwatchProps> = props => {
@@ -14,9 +14,9 @@ const Swatch: React.FC<SwatchProps> = props => {
     colorType
   } = props;
 
-  if (colorType === colorTypes.lch) {
+  if (colorType === ColorTypes.lch) {
     // react doesn't support lch colors, so we have to use dangerouslySetInnerHTML
-    const rgbaFallback = formatColor(toRgba(color, colorType), colorTypes.rgba);
+    const rgbaFallback = formatColor(toRgba(color, colorType), ColorTypes.rgba);
     return (
       <>
       <div className="swatch-wrapper">

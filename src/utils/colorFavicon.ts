@@ -1,7 +1,7 @@
-import { colorTypes } from './colorTypes';
+import { ColorTypes } from './colorTypes';
 import { translatedColor } from '../utils/translatedColor';
 
-const colorFavicon = (incomingColor: string, incomingColorType: colorTypes) => {
+const colorFavicon = (incomingColor: string, incomingColorType: ColorTypes) => {
     // largely lifted from https://stackoverflow.com/questions/6964144/dynamically-generated-favicon
     const img = new Image();
     const canvas = document.createElement('canvas');
@@ -14,7 +14,7 @@ const colorFavicon = (incomingColor: string, incomingColorType: colorTypes) => {
     link.rel = 'shortcut icon';
     link.href = canvas.toDataURL("image/x-icon");
     document.getElementsByTagName('head')[0].appendChild(link);
-    const color = translatedColor(incomingColor, incomingColorType, colorTypes.hex6);
+    const color = translatedColor(incomingColor, incomingColorType, ColorTypes.hex6);
     img.src = '';
     ctx.drawImage(img, 0, 0);
     ctx.fillStyle = color;

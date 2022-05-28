@@ -1,4 +1,4 @@
-import { colorTypes } from './colorTypes';
+import { ColorTypes } from './colorTypes';
 import { lowerCaseNamedColors } from  './namedColors'
 
 const isValidHex6 = (color: string): boolean => {
@@ -72,18 +72,18 @@ const isValidLch = (color: string): boolean => {
   }
 }
 
-const isValidColor = (color: string, colorType: colorTypes): boolean => {
+const isValidColor = (color: string, colorType: ColorTypes): boolean => {
   switch (true) {
     // @todo need more robust validation of these colors
-    case colorType === colorTypes.hex6 && isValidHex6(color):
-    case colorType === colorTypes.picker && isValidHex6(color):
-    case colorType === colorTypes.hex8 && isValidHex8(color):
-    case colorType === colorTypes.rgba && isValidRgba(color):
-    case colorType === colorTypes.rgb  && isValidRgb(color):
-    case colorType === colorTypes.hsla && isValidHsla(color):
-    case colorType === colorTypes.hsl  && isValidHsl(color):
-    case colorType === colorTypes.lch  && isValidLch(color):
-    case colorType === colorTypes.named &&
+    case colorType === ColorTypes.hex6 && isValidHex6(color):
+    case colorType === ColorTypes.picker && isValidHex6(color):
+    case colorType === ColorTypes.hex8 && isValidHex8(color):
+    case colorType === ColorTypes.rgba && isValidRgba(color):
+    case colorType === ColorTypes.rgb  && isValidRgb(color):
+    case colorType === ColorTypes.hsla && isValidHsla(color):
+    case colorType === ColorTypes.hsl  && isValidHsl(color):
+    case colorType === ColorTypes.lch  && isValidLch(color):
+    case colorType === ColorTypes.named &&
       lowerCaseNamedColors.includes(color.toLowerCase()):
       return true;
     default:

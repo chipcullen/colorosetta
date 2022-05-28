@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 
-import { colorTypes } from '../utils/colorTypes';
+import { ColorTypes } from '../utils/colorTypes';
 import { isLchOutOfRgbGamut } from "../utils/isLchOutOfRgbGamut";
 import { isValidColor } from '../utils/isValidColor';
 import { translatedColor } from '../utils/translatedColor';
@@ -9,9 +9,9 @@ type InputProps = {
   labelText: string;
   placeHolder: string;
   onChange: Function;
-  colorType: colorTypes;
+  colorType: ColorTypes;
   incomingColor: string;
-  incomingColorType: colorTypes;
+  incomingColorType: ColorTypes;
 };
 
 enum inputStates {
@@ -33,7 +33,7 @@ const Input: React.FC<InputProps> = props => {
 
   const initInputState = () => {
     // show the gamut warning on load
-    if (colorType === colorTypes.lch && isLchOutOfRgbGamut(incomingColor)) {
+    if (colorType === ColorTypes.lch && isLchOutOfRgbGamut(incomingColor)) {
       return inputStates.outOfFocusOutOfGamut
     } else {
       return inputStates.outOfFocus
@@ -48,7 +48,7 @@ const Input: React.FC<InputProps> = props => {
     setValue(changedValue);
 
    if (isValidColor(changedValue, colorType)) {
-      if (colorType === colorTypes.lch && isLchOutOfRgbGamut(changedValue)) {
+      if (colorType === ColorTypes.lch && isLchOutOfRgbGamut(changedValue)) {
         setInputState(inputStates.inFocusValidValueOutOfGamut);
       } else {
         setInputState(inputStates.inFocusValidValue);
@@ -72,7 +72,7 @@ const Input: React.FC<InputProps> = props => {
 
   useEffect(() => {
     if (inputState === inputStates.onBlurInvalidValue &&
-    translatedIncomingColor !== colorTypes.none &&
+    translatedIncomingColor !== ColorTypes.none &&
     translatedIncomingColor !== value) {
       setValue(translatedIncomingColor);
       setInputState(inputStates.outOfFocus);
@@ -83,14 +83,14 @@ const Input: React.FC<InputProps> = props => {
   }, [translatedIncomingColor]);
 
   if (inputState === inputStates.outOfFocus &&
-    translatedIncomingColor !== colorTypes.none &&
+    translatedIncomingColor !== ColorTypes.none &&
     translatedIncomingColor !== value) {
     setValue(translatedIncomingColor);
   }
 
   const showGamutWarning = inputState === inputStates.inFocusValidValueOutOfGamut || inputState === inputStates.outOfFocusOutOfGamut
 
-  if (colorType === colorTypes.picker) {
+  if (colorType === ColorTypes.picker) {
     return (
       <div className="input-wrapper">
       <label>

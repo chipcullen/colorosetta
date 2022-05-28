@@ -241,22 +241,6 @@ function LCH_to_sRGB(LCH) {
     return gam_sRGB(XYZ_to_lin_sRGB(D50_to_D65(Lab_to_XYZ(LCH_to_Lab(LCH)))));
 }
 
-// Chromaticity utilities
-function alpha_to_string(a = 100) {
-	return (a < 100? ` / ${a}%` : "");
-}
-
-
-function LCH_to_sRGB_string(l, c, h, a = 100, forceInGamut = false) {
-	if (forceInGamut) {
-		[l, c, h] = force_into_gamut(l, c, h, isLCH_within_sRGB);
-	}
-
-	return "rgb(" + LCH_to_sRGB([+l, +c, +h]).map(x => {
-		return Math.round(x * 10000)/100 + "%";
-	}).join(" ") + alpha_to_string(a) + ")";
-}
-
 function LCH_to_RGB_array(l, c, h) {
   [l, c, h] = force_into_gamut(l, c, h, isLCH_within_sRGB);
 
@@ -310,4 +294,4 @@ const rgb_array_to_LCH = (rgb: Array<number>): Array<number> => {
 	return lch.map((x) => parseFloat(x.toFixed(3)));
 }
 
-export { LCH_to_sRGB, LCH_to_RGB_array, isLCH_within_sRGB, LCH_to_sRGB_string, sRGB_to_LCH,  rgb_array_to_LCH }
+export { LCH_to_RGB_array, isLCH_within_sRGB, rgb_array_to_LCH }

@@ -28,7 +28,7 @@ const App: React.FC = () => {
         <p>A utility to translate colors <a href="https://marketplace.visualstudio.com/items?itemName=chipcullen.colorosetta">(now as a VS Code Extension!)</a></p>
       </header>
 
-      <Swatch color={incomingColor} />
+      <Swatch color={incomingColor} colorType={incomingColorType} />
 
       <section className="inputs">
 
@@ -99,6 +99,16 @@ const App: React.FC = () => {
           labelText="picker"
           colorType={colorTypes.picker}
           placeHolder=""
+          onChange={onInputChange}
+          incomingColor={incomingColor}
+          incomingColorType={incomingColorType}
+        />
+      </section>
+      <section className="lch-input">
+        <Input
+          labelText="lch"
+          colorType={colorTypes.lch}
+          placeHolder="lch(54.291% 106.837 40.858 / 1)"
           onChange={onInputChange}
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}

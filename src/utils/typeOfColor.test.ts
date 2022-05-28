@@ -45,4 +45,8 @@ describe("Type Of Color", () => {
   it("returns hsl", () => {
     expect(typeOfColor("hsl(0, 0%, 100)")).toBe("hsl");
   });
+
+  it("returns lch", () => {
+    expect(typeOfColor("lch(54.291% 106.837 40.858)")).toBe("lch");
+  });
 });

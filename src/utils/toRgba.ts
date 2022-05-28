@@ -1,5 +1,7 @@
+import { colorStringToArray } from './colorStringToArray';
 import { colorTypes } from './colorTypes';
 import { toRgb } from './toRgb';
+import { LCH_to_RGB_array } from './w3conversions';
 
 // handles #0000 or #00000000
 // based on this function: https://css-tricks.com/converting-color-spaces-in-javascript/#article-header-id-3
@@ -54,17 +56,13 @@ const stringToHue = (input: string): Hue => {
   }
 };
 
-// @TODO untangle this type
-const hslaToRgba = (hslaArg: any): number[] => {
+const hslaToRgba = (hslaArg: string): number[] => {
   const sep: string = hslaArg.indexOf(",") > -1 ? "," : " ";
 
   const hsla: any = hslaArg
     .substr(5)
     .split(")")[0]
     .split(sep);
-
-  // console.log(typeof hsla);
-  // console.log(hsla);
 
   if (hsla.indexOf("/") > -1) hsla.splice(3, 1);
 
@@ -116,20 +114,23 @@ const hslaToRgba = (hslaArg: any): number[] => {
   return [+r, +g, +b, +a];
 };
 
-const rgbaToRgba = (rgba: any) => {
-  const sep = rgba.indexOf(",") > -1 ? "," : " ";
+const lchToRgba = (lch: string): Array<number> => {
+  const lchArray = colorStringToArray(lch) as Array<string>
 
-  rgba = rgba
-    .substr(5)
-    .split(")")[0]
-    .split(sep);
+  const l = lchArray[0].replace("%","");
+  const c = lchArray[1];
+  const h = lchArray[2];
 
-  const r = rgba[0];
-  const g = rgba[1];
-  const b = rgba[2];
-  const a = rgba[3];
+  const rgbaArray = LCH_to_RGB_array(+l, +c, +h);
 
-  return [+r, +g, +b, +a];
+  // if we have an alpha value, else supply 1
+  const alpha: string = lchArray[3] === '/' ? (parseInt(lchArray[4].replace("%", "")) / 100).toFixed(2) : '1';
+  rgbaArray.push(parseFloat(alpha));
+  return rgbaArray;
+}
+
+const rgbaToRgba = (color: string): Array<number> => {
+  return colorStringToArray(color, true, 5) as Array<number>;
 };
 
 const toRgba = (color: string, colorType: colorTypes) => {
@@ -146,6 +147,8 @@ const toRgba = (color: string, colorType: colorTypes) => {
       return hslaToRgba(color);
     case colorType === colorTypes.hsl:
       return toRgb(color, colorType).concat([1]);
+    case colorType === colorTypes.lch:
+      return lchToRgba(color);
     case colorType === colorTypes.named:
       return toRgb(color, colorType).concat([1]);
     default:
@@ -153,4 +156,4 @@ const toRgba = (color: string, colorType: colorTypes) => {
   }
 };
 
-export { hex8ToRgba, hslaToRgba, rgbaToRgba, toRgba };
+export { hex8ToRgba, hslaToRgba, lchToRgba, rgbaToRgba, toRgba };

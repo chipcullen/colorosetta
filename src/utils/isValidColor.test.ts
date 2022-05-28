@@ -1,4 +1,4 @@
-import { isValidColor, isValidHex6, isValidHex8, isValidRgb, isValidRgba, isValidHsl, isValidHsla } from './isValidColor';
+import { isValidColor, isValidHex6, isValidHex8, isValidRgb, isValidRgba, isValidHsl, isValidHsla, isValidLch } from './isValidColor';
 import { colorTypes } from './colorTypes';
 
 
@@ -89,6 +89,22 @@ describe('isValidHsla', () => {
   it('return false on invalid hsla values', () => {
     expect(isValidHsla('hsla(100%, 100%, 100%)')).toBe(false);
     expect(isValidHsla('hsla (100%, 255, 100%, 1)')).toBe(false);
+  });
+});
+
+describe('isValidLch', () => {
+  it('return true on valid lch values', () => {
+    expect(isValidLch('lch(100% 100 100 / 0.5)')).toBe(true);
+    expect(isValidLch('lch(100% 100 100 / 1)')).toBe(true);
+    expect(isValidLch('lch(50.5% 100 100 / 0.3)')).toBe(true);
+    expect(isValidLch('lch(99% 100 100 / 50.5%)')).toBe(true);
+    expect(isValidLch('lch(99% 100 100 / 50%)')).toBe(true);
+    expect(isValidLch('lch(99% 100 100)')).toBe(true);
+
+  });
+
+  it('return false on invalid lch values', () => {
+    expect(isValidLch('lch(99 100 100 / 50%)')).toBe(false);
   });
 });
 

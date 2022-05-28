@@ -61,6 +61,16 @@ const isValidHsl = (color: string): boolean => {
   }
 }
 
+const isValidLch = (color: string): boolean => {
+  // @todo make sure % are 0-100,
+  // add support for `deg` and `rad` and `turn`
+  let regex = /lch\(((?=\.\d|\d)(?:\d+)?(?:\.?\d*))?%\s+((?=\.\d|\d)(?:\d+)?(?:\.?\d*))(?:(\d+))?\s+((?=\.\d|\d)(?:\d+)?(?:\.?\d*))(?:(\d+))?(\s+(\/\s+((?=\.\d|\d)(?:\d+)?(?:\.?\d*))(\d+)))?%?\)/i;
+  if (regex.test(color)) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 const isValidColor = (color: string, colorType: colorTypes): boolean => {
   switch (true) {
@@ -72,6 +82,7 @@ const isValidColor = (color: string, colorType: colorTypes): boolean => {
     case colorType === colorTypes.rgb  && isValidRgb(color):
     case colorType === colorTypes.hsla && isValidHsla(color):
     case colorType === colorTypes.hsl  && isValidHsl(color):
+    case colorType === colorTypes.lch  && isValidLch(color):
     case colorType === colorTypes.named &&
       lowerCaseNamedColors.includes(color.toLowerCase()):
       return true;
@@ -80,4 +91,4 @@ const isValidColor = (color: string, colorType: colorTypes): boolean => {
   }
 };
 
-export { isValidColor, isValidHex6, isValidHex8, isValidRgb, isValidRgba, isValidHsl, isValidHsla }
+export { isValidColor, isValidHex6, isValidHex8, isValidRgb, isValidRgba, isValidHsl, isValidHsla, isValidLch }

@@ -1,3 +1,4 @@
+import { colorStringToArray } from './colorStringToArray';
 import { hexToRgb } from './toRgb';
 
 const rgbArrayToHsl = (rgb: Array<number>): Array<number> => {
@@ -49,34 +50,18 @@ const rgbArrayToHsl = (rgb: Array<number>): Array<number> => {
 }
 
 const rgbToHsl = (rgb: string): Array<number> => {
-
-  let sep = rgb.indexOf(",") > -1 ? "," : " ";
-
-  // Turn "rgb(r,g,b)" into [r,g,b]
-  const rgbArray: Array<string> = rgb
-    .substr(4)
-    .split(")")[0]
-    .split(sep);
-
-  const rgbNumberArray = [parseInt(rgbArray[0]), parseInt(rgbArray[1]), parseInt(rgbArray[2])]
-
-  return rgbArrayToHsl(rgbNumberArray);
+  const rgbArray = colorStringToArray(rgb, true) as Array<number>;
+  return rgbArrayToHsl(rgbArray);
 }
 
 const hslToHsl = (hsl: string): Array<number> => {
-  const sep = hsl.indexOf(",") > -1 ? "," : " ";
-
-  const hslArray: Array<string> = hsl
-    .substr(4)
-    .split(")")[0]
-    .split(sep);
+  const hslArray = colorStringToArray(hsl) as Array<string>;
 
   const h = parseInt(hslArray[0]);
   const s = parseInt(hslArray[1].substr(0, hslArray[1].length - 1));
   const l = parseInt(hslArray[2].substr(0, hslArray[2].length - 1));
 
   // @todo add support for deg, rad, turn
-
   return [h, s, l];
 };
 

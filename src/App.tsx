@@ -1,21 +1,20 @@
-import * as React from 'react';
-import './App.css';
+import * as React from "react";
+import "./App.css";
 import { useQueryString } from "./utils/useQueryString";
-import { colorTypes } from './utils/colorTypes';
-import { typeOfColor } from './utils/typeOfColor';
-import { colorFavicon } from './utils/colorFavicon';
-import { Swatch } from './components/Swatch';
-import { Input } from './components/Input';
-import { Footer } from './components/Footer';
-import { DEFAULT_COLOR } from './constants';
-
+import { colorTypes } from "./utils/colorTypes";
+import { typeOfColor } from "./utils/typeOfColor";
+import { colorFavicon } from "./utils/colorFavicon";
+import { Swatch } from "./components/Swatch";
+import { Input } from "./components/Input";
+import { Footer } from "./components/Footer";
+import { DEFAULT_COLOR } from "./constants";
 
 const App: React.FC = () => {
   const [colorQp, setColorQp] = useQueryString("color", DEFAULT_COLOR);
 
   const onInputChange = (value: string) => {
     setColorQp(value);
-  }
+  };
 
   const incomingColor = colorQp ? colorQp.toString() : ``;
   const incomingColorType = typeOfColor(incomingColor);
@@ -25,13 +24,17 @@ const App: React.FC = () => {
     <div className="App">
       <header className="App-header">
         <h1>ColoRosetta</h1>
-        <p>A utility to translate colors <a href="https://marketplace.visualstudio.com/items?itemName=chipcullen.colorosetta">(now as a VS Code Extension!)</a></p>
+        <p>
+          A utility to translate colors{" "}
+          <a href="https://marketplace.visualstudio.com/items?itemName=chipcullen.colorosetta">
+            (now as a VS Code Extension!)
+          </a>
+        </p>
       </header>
 
       <Swatch color={incomingColor} colorType={incomingColorType} />
 
       <section className="inputs">
-
         <Input
           labelText="hex6"
           colorType={colorTypes.hex6}
@@ -69,6 +72,15 @@ const App: React.FC = () => {
         />
 
         <Input
+          labelText="p3"
+          colorType={colorTypes.p3}
+          placeHolder="color(display-p3 1 0 0)"
+          onChange={onInputChange}
+          incomingColor={incomingColor}
+          incomingColorType={incomingColorType}
+        />
+
+        <Input
           labelText="hsl"
           colorType={colorTypes.hsl}
           placeHolder="hsl(100 100% 50%)"
@@ -87,9 +99,18 @@ const App: React.FC = () => {
         />
 
         <Input
-          labelText="named"
-          colorType={colorTypes.named}
-          placeHolder="RebeccaPurple"
+          labelText="lch"
+          colorType={colorTypes.lch}
+          placeHolder="lch(54.291% 106.837 40.858 / 1)"
+          onChange={onInputChange}
+          incomingColor={incomingColor}
+          incomingColorType={incomingColorType}
+        />
+
+        <Input
+          labelText="oklch"
+          colorType={colorTypes.oklch}
+          placeHolder="oklch(62.8% 0.258 29.234)"
           onChange={onInputChange}
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}
@@ -104,11 +125,11 @@ const App: React.FC = () => {
           incomingColorType={incomingColorType}
         />
       </section>
-      <section className="lch-input">
+      <section className="named-input">
         <Input
-          labelText="lch"
-          colorType={colorTypes.lch}
-          placeHolder="lch(54.291% 106.837 40.858 / 1)"
+          labelText="named"
+          colorType={colorTypes.named}
+          placeHolder="RebeccaPurple"
           onChange={onInputChange}
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}
@@ -117,6 +138,6 @@ const App: React.FC = () => {
       <Footer />
     </div>
   );
-}
+};
 
 export default App;

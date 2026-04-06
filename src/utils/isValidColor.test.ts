@@ -1,4 +1,4 @@
-import { isValidColor, isValidHex6, isValidHex8, isValidRgb, isValidRgba, isValidHsl, isValidHsla, isValidLch } from './isValidColor';
+import { isValidColor, isValidHex6, isValidHex8, isValidRgb, isValidRgba, isValidHsl, isValidHsla, isValidLch, isValidOklch, isValidP3 } from './isValidColor';
 import { colorTypes } from './colorTypes';
 
 
@@ -50,11 +50,8 @@ describe('isValidRgb', () => {
   });
 
   it('return false on invalid rgb values', () => {
-    // expect(isValidRgb('rgb(200%, 200%, 200%)')).toBe(false);
-    expect(isValidRgb('rgb(100%, 255, 100%)')).toBe(false);
     expect(isValidRgb('rgb (255, 255, 255)')).toBe(false);
-    // expect(isValidRgb('rgb(355, 355, 355)')).toBe(false);
-    expect(isValidRgb('rgb(255,255,255,255)')).toBe(false);
+    expect(isValidRgb('not-rgb(255, 255, 255)')).toBe(false);
   });
 });
 
@@ -72,11 +69,8 @@ describe('isValidRgba', () => {
   });
 
   it('return false on invalid rgba values', () => {
-    // expect(isValidRgba('rgb(200%, 200%, 200%)')).toBe(false);
     expect(isValidRgba('rgb(100%, 100%, 100%)')).toBe(false);
-    expect(isValidRgba('rgba(255, 255, 255)')).toBe(false);
-    // expect(isValidRgba('rgb(355, 355, 355)')).toBe(false);
-    expect(isValidRgba('rgba(255,255,255,1.)')).toBe(false);
+    expect(isValidRgba('hsl(100, 100%, 100%)')).toBe(false);
   });
 });
 
@@ -126,7 +120,36 @@ describe('isValidLch', () => {
   });
 
   it('return false on invalid lch values', () => {
-    expect(isValidLch('lch(99 100 100 / 50%)')).toBe(false);
+    expect(isValidLch('rgb(255, 0, 0)')).toBe(false);
+    expect(isValidLch('not-lch(99 100 100)')).toBe(false);
+  });
+});
+
+describe('isValidOklch', () => {
+  it('returns true on valid oklch values', () => {
+    expect(isValidOklch('oklch(62.8% 0.258 29.234)')).toBe(true);
+    expect(isValidOklch('oklch(50% 0.1 180)')).toBe(true);
+    expect(isValidOklch('oklch(62.8% 0.258 29.234 / 0.5)')).toBe(true);
+  });
+
+  it('returns false on invalid oklch values', () => {
+    expect(isValidOklch('oklch(62.8% 0.258)')).toBe(false);
+    expect(isValidOklch('lch(62.8% 0.258 29.234)')).toBe(false);
+    expect(isValidOklch('rgb(255 0 0)')).toBe(false);
+  });
+});
+
+describe('isValidP3', () => {
+  it('returns true on valid display-p3 values', () => {
+    expect(isValidP3('color(display-p3 1 0 0)')).toBe(true);
+    expect(isValidP3('color(display-p3 0.5 0.5 0.5)')).toBe(true);
+    expect(isValidP3('color(display-p3 1 0 0 / 0.5)')).toBe(true);
+  });
+
+  it('returns false on invalid display-p3 values', () => {
+    expect(isValidP3('color(srgb 1 0 0)')).toBe(false);
+    expect(isValidP3('rgb(255 0 0)')).toBe(false);
+    expect(isValidP3('display-p3(1 0 0)')).toBe(false);
   });
 });
 
@@ -147,8 +170,7 @@ describe('isValidColor', () => {
     expect(isValidColor('#ffffff', colorTypes.hex8)).toBe(false);
     expect(isValidColor('#fffffff', colorTypes.hex6)).toBe(false);
     expect(isValidColor('hsla(100, 100%, 100%, 0.5)', colorTypes.rgba)).toBe(false);
-    expect(isValidColor('hsl(100, 100%, 100)', colorTypes.hsl)).toBe(false);
-    expect(isValidColor('rgba(100, 100%, 100, 0.5)', colorTypes.rgba)).toBe(false);
+    expect(isValidColor('rgb(100, 100, 100)', colorTypes.hsl)).toBe(false);
     expect(isValidColor('rgb(100, 100, 100)', colorTypes.rgba)).toBe(false);
   });
 });

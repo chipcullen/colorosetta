@@ -31,4 +31,32 @@ describe('translatedColor', () => {
     expect(translatedColor(`lch(54.291% 106.837 40.858 / 50%)`, colorTypes.lch, colorTypes.hex8)).toBe('#ff000080');
     expect(translatedColor(`red`, colorTypes.named, colorTypes.hex6)).toBe('#ff0000');
   });
+
+  it('Should translate hex without # prefix', () => {
+    expect(translatedColor(`fff`, colorTypes.hex6, colorTypes.rgb)).toBe(`rgb(255 255 255)`);
+    expect(translatedColor(`ff0000`, colorTypes.hex6, colorTypes.named)).toBe(`Red`);
+    expect(translatedColor(`ff000080`, colorTypes.hex8, colorTypes.rgba)).toBe(`rgba(255 0 0 / 0.5019607843137255)`);
+  });
+
+  it('Should translate oklch to other formats', () => {
+    expect(translatedColor(`oklch(62.8% 0.258 29.234)`, colorTypes.oklch, colorTypes.hex6)).toBe('#ff0000');
+    expect(translatedColor(`oklch(100% 0 0)`, colorTypes.oklch, colorTypes.hex6)).toBe('#ffffff');
+    expect(translatedColor(`oklch(0% 0 0)`, colorTypes.oklch, colorTypes.hex6)).toBe('#000000');
+    expect(translatedColor(`oklch(62.8% 0.258 29.234 / 0.5)`, colorTypes.oklch, colorTypes.rgba)).toBeTruthy();
+  });
+
+  it('Should translate from oklch to oklch unchanged', () => {
+    expect(translatedColor(`oklch(62.8% 0.258 29.234)`, colorTypes.oklch, colorTypes.oklch)).toBe(`oklch(62.8% 0.258 29.234)`);
+  });
+
+  it('Should translate display-p3 to other formats', () => {
+    expect(translatedColor(`color(display-p3 1 0 0)`, colorTypes.p3, colorTypes.hex6)).toBe('#ff0b0c');
+    expect(translatedColor(`color(display-p3 1 1 1)`, colorTypes.p3, colorTypes.rgb)).toBe('rgb(255 255 255)');
+    expect(translatedColor(`color(display-p3 0 0 0)`, colorTypes.p3, colorTypes.hex6)).toBe('#000000');
+    expect(translatedColor(`color(display-p3 1 0 0 / 0.5)`, colorTypes.p3, colorTypes.rgba)).toBeTruthy();
+  });
+
+  it('Should translate from display-p3 to display-p3 unchanged', () => {
+    expect(translatedColor(`color(display-p3 1 0 0)`, colorTypes.p3, colorTypes.p3)).toBe(`color(display-p3 1 0 0)`);
+  });
 });

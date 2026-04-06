@@ -1,4 +1,4 @@
-import { isValidColor, isValidHex6, isValidHex8, isValidRgb, isValidRgba, isValidHsl, isValidHsla, isValidLch } from './isValidColor';
+import { isValidColor, isValidHex6, isValidHex8, isValidRgb, isValidRgba, isValidHsl, isValidHsla, isValidLch, isValidOklch, isValidP3 } from './isValidColor';
 import { colorTypes } from './colorTypes';
 
 
@@ -122,6 +122,34 @@ describe('isValidLch', () => {
   it('return false on invalid lch values', () => {
     expect(isValidLch('rgb(255, 0, 0)')).toBe(false);
     expect(isValidLch('not-lch(99 100 100)')).toBe(false);
+  });
+});
+
+describe('isValidOklch', () => {
+  it('returns true on valid oklch values', () => {
+    expect(isValidOklch('oklch(62.8% 0.258 29.234)')).toBe(true);
+    expect(isValidOklch('oklch(50% 0.1 180)')).toBe(true);
+    expect(isValidOklch('oklch(62.8% 0.258 29.234 / 0.5)')).toBe(true);
+  });
+
+  it('returns false on invalid oklch values', () => {
+    expect(isValidOklch('oklch(62.8% 0.258)')).toBe(false);
+    expect(isValidOklch('lch(62.8% 0.258 29.234)')).toBe(false);
+    expect(isValidOklch('rgb(255 0 0)')).toBe(false);
+  });
+});
+
+describe('isValidP3', () => {
+  it('returns true on valid display-p3 values', () => {
+    expect(isValidP3('color(display-p3 1 0 0)')).toBe(true);
+    expect(isValidP3('color(display-p3 0.5 0.5 0.5)')).toBe(true);
+    expect(isValidP3('color(display-p3 1 0 0 / 0.5)')).toBe(true);
+  });
+
+  it('returns false on invalid display-p3 values', () => {
+    expect(isValidP3('color(srgb 1 0 0)')).toBe(false);
+    expect(isValidP3('rgb(255 0 0)')).toBe(false);
+    expect(isValidP3('display-p3(1 0 0)')).toBe(false);
   });
 });
 

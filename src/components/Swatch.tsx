@@ -10,11 +10,17 @@ type SwatchProps = {
 const Swatch: React.FC<SwatchProps> = props => {
   const { color, colorType } = props;
 
-  if (colorType === colorTypes.lch) {
+  const supportsCheck: Partial<Record<colorTypes, string>> = {
+    [colorTypes.lch]: 'color: lch(100% 0 0)',
+    [colorTypes.oklch]: 'color: oklch(1 0 0)',
+    [colorTypes.p3]: 'color: color(display-p3 0 0 0)',
+  };
+
+  if (colorType in supportsCheck) {
     let rgbaFallback = 'rgba(0 0 0 / 1)';
     try {
-      const c = new Color(color).to('srgb');
-      const [r, g, b] = c.coords.map((v: number) => Math.round(v * 255));
+      const c = new Color(color).toGamut({space: 'srgb'}).to('srgb');
+      const [r, g, b] = c.coords.map((v: number) => Math.min(255, Math.max(0, Math.round(v * 255))));
       rgbaFallback = `rgba(${r} ${g} ${b} / ${c.alpha})`;
     } catch { /* use default */ }
 
@@ -28,13 +34,13 @@ const Swatch: React.FC<SwatchProps> = props => {
               background-color: ${color};
             }
 
-            @supports(color: lch(100% 0 0)) {
+            @supports(${supportsCheck[colorType]}) {
               .lch-warning { display: none}
             }
           `}} />
         </div>
         <small className="lch-warning">
-          ℹ️ Your browser doesn't support lch colors; showing rgba approximation
+          ℹ️ Your browser doesn't support this color format; showing rgba approximation
         </small>
       </>
     );

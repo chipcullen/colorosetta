@@ -12,9 +12,15 @@ const translatedColor = (
     return color;
   }
 
+  const hexTypes = [colorTypes.hex6, colorTypes.hex8, colorTypes.picker];
+  const normalizedColor =
+    hexTypes.includes(startingColorType) && !color.startsWith('#')
+      ? `#${color}`
+      : color;
+
   let parsed: Color;
   try {
-    parsed = new Color(color);
+    parsed = new Color(normalizedColor);
   } catch {
     return 'none';
   }

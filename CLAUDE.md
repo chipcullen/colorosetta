@@ -4,7 +4,7 @@ A static React + TypeScript app with no backend. A one-to-many color translation
 
 ## Stack
 
-- **React 18** + **TypeScript 5**
+- **React 19** + **TypeScript 6**
 - **Vite** (build tool) — replaced Create React App in April 2026
 - **Vitest** (test runner) — replaced Jest
 - **Node 24**

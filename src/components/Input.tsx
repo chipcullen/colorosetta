@@ -36,14 +36,14 @@ const Input: React.FC<InputProps> = (props) => {
     incomingColorType,
   } = props;
 
-  const initInputState = () => {
-    // show the gamut warning on load
-    if ([colorTypes.lch, colorTypes.oklch].includes(colorType) && isOutOfSrgbGamut(incomingColor)) {
+  const getOutOfFocusState = (colorValue: string) => {
+    if ([colorTypes.lch, colorTypes.oklch, colorTypes.p3].includes(colorType) && isOutOfSrgbGamut(colorValue)) {
       return inputStates.outOfFocusOutOfGamut;
-    } else {
-      return inputStates.outOfFocus;
     }
+    return inputStates.outOfFocus;
   };
+
+  const initInputState = () => getOutOfFocusState(incomingColor);
 
   const [value, setValue] = useState(incomingColor);
   const [inputState, setInputState] = useState(initInputState());
@@ -53,7 +53,7 @@ const Input: React.FC<InputProps> = (props) => {
     setValue(changedValue);
 
     if (isValidColor(changedValue, colorType)) {
-      if ([colorTypes.lch, colorTypes.oklch].includes(colorType) && isOutOfSrgbGamut(changedValue)) {
+      if ([colorTypes.lch, colorTypes.oklch, colorTypes.p3].includes(colorType) && isOutOfSrgbGamut(changedValue)) {
         setInputState(inputStates.inFocusValidValueOutOfGamut);
       } else {
         setInputState(inputStates.inFocusValidValue);
@@ -67,7 +67,7 @@ const Input: React.FC<InputProps> = (props) => {
   const blurHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const changedValue = e.currentTarget.value;
     if (isValidColor(changedValue, colorType)) {
-      setInputState(inputStates.outOfFocus);
+      setInputState(getOutOfFocusState(changedValue));
     } else {
       setInputState(inputStates.onBlurInvalidValue);
     }
@@ -86,7 +86,7 @@ const Input: React.FC<InputProps> = (props) => {
       translatedIncomingColor !== value
     ) {
       setValue(translatedIncomingColor);
-      setInputState(inputStates.outOfFocus);
+      setInputState(getOutOfFocusState(translatedIncomingColor));
     }
     // disabling this because we only want to update when
     // translatedIncomingColor changes, but not value or inputState
@@ -94,11 +94,12 @@ const Input: React.FC<InputProps> = (props) => {
   }, [translatedIncomingColor]);
 
   if (
-    inputState === inputStates.outOfFocus &&
+    (inputState === inputStates.outOfFocus || inputState === inputStates.outOfFocusOutOfGamut) &&
     translatedIncomingColor !== colorTypes.none &&
     translatedIncomingColor !== value
   ) {
     setValue(translatedIncomingColor);
+    setInputState(getOutOfFocusState(translatedIncomingColor));
   }
 
   const showGamutWarning =

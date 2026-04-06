@@ -1,5 +1,15 @@
-import { colorTypes } from "./colorTypes";
-import { lowerCaseNamedColors } from "./namedColors";
+import Color from 'colorjs.io';
+import { colorTypes } from './colorTypes';
+import { lowerCaseNamedColors } from './namedColors';
+
+const canParseColor = (color: string): boolean => {
+  try {
+    new Color(color);
+    return true;
+  } catch {
+    return false;
+  }
+};
 
 const isValidHex6 = (color: string): boolean => {
   // https://stackoverflow.com/a/8027444/1173898
@@ -12,101 +22,44 @@ const isValidHex8 = (color: string): boolean => {
 };
 
 const isValidRgb = (color: string): boolean => {
-  // https://rgxdb.com/r/4LS1LCA
-  // @todo make sure values are 0-100 for % or 0-255 for unitless
-  // Modern space syntax: rgb(255 255 255)
-  if (
-    /rgb\(\s*(-?\d+|-?\d*\.\d+)(%?)\s+(-?\d+|-?\d*\.\d+)(\2)\s+(-?\d+|-?\d*\.\d+)(\2)\s*\)/.test(color)
-  ) {
-    return true;
-  }
-  // Legacy comma syntax: rgb(255, 255, 255)
-  if (
-    /rgb\(\s*(-?\d+|-?\d*\.\d+(?=%))(%?)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*\)/.test(color)
-  ) {
-    return true;
-  }
-  return false;
+  return color.startsWith('rgb(') && canParseColor(color);
 };
 
 const isValidRgba = (color: string): boolean => {
-  // https://rgxdb.com/r/GFYPX74
-  // @todo make sure values are 0-100 for % or 0-255 for unitless
-  // Modern space syntax: rgba(255 255 255 / 0.5)
-  if (
-    /rgba\(\s*(-?\d+|-?\d*\.\d+)(%?)\s+(-?\d+|-?\d*\.\d+)(\2)\s+(-?\d+|-?\d*\.\d+)(\2)\s*\/\s*(-?\d+|-?\d*\.\d+)\s*\)/.test(color)
-  ) {
-    return true;
-  }
-  // Legacy comma syntax: rgba(255, 255, 255, 0.5)
-  if (
-    /rgba\(\s*(-?\d+|-?\d*\.\d+(?=%))(%?)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/.test(color)
-  ) {
-    return true;
-  }
-  return false;
+  return color.startsWith('rgba(') && canParseColor(color);
 };
 
 const isValidHsl = (color: string): boolean => {
-  // https://rgxdb.com/r/6KT5NBF
-  // @todo make sure % are 0-100,
-  // add support for `deg` and `rad` and `turn`
-  // Modern space syntax: hsl(120 100% 50%)
-  if (
-    /hsl\(\s*(-?\d+|-?\d*\.\d+)\s+(-?\d+|-?\d*\.\d+)%\s+(-?\d+|-?\d*\.\d+)%\s*\)/.test(color)
-  ) {
-    return true;
-  }
-  // Legacy comma syntax: hsl(120, 100%, 50%)
-  if (
-    /hsl\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*\)/.test(color)
-  ) {
-    return true;
-  }
-  return false;
+  return color.startsWith('hsl(') && canParseColor(color);
 };
 
 const isValidHsla = (color: string): boolean => {
-  // https://rgxdb.com/r/6KT5NBF
-  // @todo make sure % are 0-100,
-  // add support for `deg` and `rad` and `turn`
-  // Modern space syntax: hsla(120 100% 50% / 0.5)
-  if (
-    /hsla\(\s*(-?\d+|-?\d*\.\d+)\s+(-?\d+|-?\d*\.\d+)%\s+(-?\d+|-?\d*\.\d+)%\s*\/\s*(-?\d+|-?\d*\.\d+)\s*\)/.test(color)
-  ) {
-    return true;
-  }
-  // Legacy comma syntax: hsla(120, 100%, 50%, 0.5)
-  if (
-    /hsla\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/.test(color)
-  ) {
-    return true;
-  }
-  return false;
+  return color.startsWith('hsla(') && canParseColor(color);
 };
 
 const isValidLch = (color: string): boolean => {
-  // @todo make sure % are 0-100,
-  // add support for `deg` and `rad` and `turn`
-  const regex =
-    /lch\(((?=\.\d|\d)(?:\d+)?(?:\.?\d*))?%\s+((?=\.\d|\d)(?:\d+)?(?:\.?\d*))(?:(\d+))?\s+((?=\.\d|\d)(?:\d+)?(?:\.?\d*))(?:(\d+))?(\s+(\/\s+((?=\.\d|\d)(?:\d+)?(?:\.?\d*))(\d+)))?%?\)/i;
-  return regex.test(color);
+  return color.startsWith('lch(') && canParseColor(color);
 };
 
 const isValidColor = (color: string, colorType: colorTypes): boolean => {
-  switch (true) {
-    // @todo need more robust validation of these colors
-    case colorType === colorTypes.hex6 && isValidHex6(color):
-    case colorType === colorTypes.picker && isValidHex6(color):
-    case colorType === colorTypes.hex8 && isValidHex8(color):
-    case colorType === colorTypes.rgb && isValidRgb(color):
-    case colorType === colorTypes.rgba && isValidRgba(color):
-    case colorType === colorTypes.hsl && isValidHsl(color):
-    case colorType === colorTypes.hsla && isValidHsla(color):
-    case colorType === colorTypes.lch && isValidLch(color):
-    case colorType === colorTypes.named &&
-      lowerCaseNamedColors.includes(color.toLowerCase()):
-      return true;
+  switch (colorType) {
+    case colorTypes.hex6:
+    case colorTypes.picker:
+      return isValidHex6(color);
+    case colorTypes.hex8:
+      return isValidHex8(color);
+    case colorTypes.rgb:
+      return isValidRgb(color);
+    case colorTypes.rgba:
+      return isValidRgba(color);
+    case colorTypes.hsl:
+      return isValidHsl(color);
+    case colorTypes.hsla:
+      return isValidHsla(color);
+    case colorTypes.lch:
+      return isValidLch(color);
+    case colorTypes.named:
+      return lowerCaseNamedColors.includes(color.toLowerCase());
     default:
       return false;
   }

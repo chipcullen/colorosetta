@@ -1,14 +1,12 @@
-import { colorStringToArray } from './colorStringToArray';
-import { isLCH_within_sRGB } from './w3conversions';
+import Color from 'colorjs.io';
 
 const isLchOutOfRgbGamut = (lch: string): boolean => {
-  const lchArray = colorStringToArray(lch) as Array<string>;
+  try {
+    const color = new Color(lch);
+    return !color.inGamut('srgb');
+  } catch {
+    return false;
+  }
+};
 
-  const l = lchArray[0].replace("%","");
-  const c = lchArray[1];
-  const h = lchArray[2];
-
-  return !isLCH_within_sRGB(+l, +c, +h);
-}
-
-export { isLchOutOfRgbGamut }
+export { isLchOutOfRgbGamut };

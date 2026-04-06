@@ -42,6 +42,20 @@ type Rad = number;
 type Turn = number;
 type Hue = Deg | Rad | Turn;
 
+// Converts modern space syntax to legacy comma syntax before parsing.
+// e.g. rgba(255 255 255 / 0.6) → rgba(255, 255, 255, 0.6)
+//      hsla(120 100% 50% / 0.8) → hsla(120, 100%, 50%, 0.8)
+const normalizeModernSyntax = (color: string): string => {
+  if (color.indexOf(',') > -1) return color;
+  const match = color.match(/^(\w+)\((.+)\)$/);
+  if (!match) return color;
+  const [, fn, content] = match;
+  const normalized = content
+    .replace(/\s+/g, ', ')
+    .replace(/,\s*\/\s*,\s*/, ', ');
+  return `${fn}(${normalized})`;
+};
+
 const stringToHue = (input: string): Hue => {
   const inputAsNum = Number(input.substr(0, input.length - 3));
 
@@ -57,6 +71,7 @@ const stringToHue = (input: string): Hue => {
 };
 
 const hslaToRgba = (hslaArg: string): number[] => {
+  hslaArg = normalizeModernSyntax(hslaArg);
   const sep: string = hslaArg.indexOf(",") > -1 ? "," : " ";
 
   const hsla: any = hslaArg
@@ -130,7 +145,7 @@ const lchToRgba = (lch: string): Array<number> => {
 }
 
 const rgbaToRgba = (color: string): Array<number> => {
-  return colorStringToArray(color, true, 5) as Array<number>;
+  return colorStringToArray(normalizeModernSyntax(color), true, 5) as Array<number>;
 };
 
 const toRgba = (color: string, colorType: colorTypes) => {
@@ -156,4 +171,4 @@ const toRgba = (color: string, colorType: colorTypes) => {
   }
 };
 
-export { hex8ToRgba, hslaToRgba, lchToRgba, rgbaToRgba, toRgba };
+export { hex8ToRgba, hslaToRgba, lchToRgba, normalizeModernSyntax, rgbaToRgba, toRgba };

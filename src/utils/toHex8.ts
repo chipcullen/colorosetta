@@ -1,5 +1,5 @@
 import { colorStringToArray } from './colorStringToArray';
-import { hslaToRgba } from './toRgba';
+import { hslaToRgba, normalizeModernSyntax } from './toRgba';
 
 const rgbaArrayToHex8 = (rgbaArray: Array<number>): string => {
   let r = (+rgbaArray[0]).toString(16);
@@ -20,7 +20,7 @@ const rgbaArrayToHex8 = (rgbaArray: Array<number>): string => {
 }
 
 const rgbaToHex8 = (rgba: string) => {
-  const rgbaArray: Array<string> = colorStringToArray(rgba, false, 5) as Array<string>;
+  const rgbaArray: Array<string> = colorStringToArray(normalizeModernSyntax(rgba), false, 5) as Array<string>;
 
   const rgbaNumArray: Array<number> = [
     parseInt(rgbaArray[0]),

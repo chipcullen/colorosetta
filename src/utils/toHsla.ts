@@ -1,5 +1,6 @@
 import { colorStringToArray } from './colorStringToArray';
 import { rgbArrayToHsl } from './toHsl';
+import { normalizeModernSyntax } from './toRgba';
 
 const rgbaArrayToHsla = (rgba: Array<number>): Array<number> => {
   const rgbNumberArray = [rgba[0], rgba[1], rgba[2]]
@@ -13,7 +14,7 @@ const rgbaArrayToHsla = (rgba: Array<number>): Array<number> => {
 }
 
 const rgbaToHsla = (rgba: string): Array<number> => {
-  const rgbaArray = colorStringToArray(rgba, false, 5) as Array<string>
+  const rgbaArray = colorStringToArray(normalizeModernSyntax(rgba), false, 5) as Array<string>
 
   const rgbNumberArray = [parseInt(rgbaArray[0]), parseInt(rgbaArray[1]), parseInt(rgbaArray[2]), parseFloat(rgbaArray[3])]
 

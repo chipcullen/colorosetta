@@ -43,6 +43,12 @@ describe('isValidRgb', () => {
     expect(isValidRgb('rgb(255,255,255)')).toBe(true);
   });
 
+  it('return true on valid modern syntax rgb values', () => {
+    expect(isValidRgb('rgb(255 255 255)')).toBe(true);
+    expect(isValidRgb('rgb(0 0 0)')).toBe(true);
+    expect(isValidRgb('rgb(100% 100% 100%)')).toBe(true);
+  });
+
   it('return false on invalid rgb values', () => {
     // expect(isValidRgb('rgb(200%, 200%, 200%)')).toBe(false);
     expect(isValidRgb('rgb(100%, 255, 100%)')).toBe(false);
@@ -57,6 +63,12 @@ describe('isValidRgba', () => {
     expect(isValidRgba('rgba(100%, 100%, 100%, 1)')).toBe(true);
     expect(isValidRgba('rgba(255, 255, 255, 0.5)')).toBe(true);
     expect(isValidRgba('rgba(255,255,255,0.5)')).toBe(true);
+  });
+
+  it('return true on valid modern syntax rgba values', () => {
+    expect(isValidRgba('rgba(255 255 255 / 0.5)')).toBe(true);
+    expect(isValidRgba('rgba(0 0 0 / 1)')).toBe(true);
+    expect(isValidRgba('rgba(100% 100% 100% / 0.5)')).toBe(true);
   });
 
   it('return false on invalid rgba values', () => {
@@ -74,6 +86,11 @@ describe('isValidHsl', () => {
     expect(isValidHsl('hsl(100,100%,100%)')).toBe(true);
   });
 
+  it('return true on valid modern syntax hsl values', () => {
+    expect(isValidHsl('hsl(100 100% 100%)')).toBe(true);
+    expect(isValidHsl('hsl(0 0% 0%)')).toBe(true);
+  });
+
   it('return false on invalid hsl values', () => {
     expect(isValidHsl('hsl(100%, 100%, 100%)')).toBe(false);
     expect(isValidHsl('hsl(100%, 255, 100%)')).toBe(false);
@@ -84,6 +101,11 @@ describe('isValidHsla', () => {
   it('return true on valid hsla values', () => {
     expect(isValidHsla('hsla(100, 100%, 100%, 0.5)')).toBe(true);
     expect(isValidHsla('hsla(100,100%,100%, 1)')).toBe(true);
+  });
+
+  it('return true on valid modern syntax hsla values', () => {
+    expect(isValidHsla('hsla(100 100% 100% / 0.5)')).toBe(true);
+    expect(isValidHsla('hsla(0 0% 0% / 1)')).toBe(true);
   });
 
   it('return false on invalid hsla values', () => {

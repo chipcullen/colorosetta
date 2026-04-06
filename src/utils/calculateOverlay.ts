@@ -1,6 +1,6 @@
-import { ASSUMED_BACKGROUND_COLOR } from '../constants';
+import { ASSUMED_BACKGROUND_COLOR } from "../constants";
 
-const channelResult = (fg: number, bg: number, alpha:number): number => {
+const channelResult = (fg: number, bg: number, alpha: number): number => {
   return Math.floor(alpha * fg + (1 - alpha) * bg);
 };
 

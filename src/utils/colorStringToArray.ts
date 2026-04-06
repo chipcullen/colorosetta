@@ -8,7 +8,7 @@ const colorStringToArray = (colorString: string, returnNum=false, index=4): Arra
     .split(sep);
 
   if (returnNum) {
-    const colorIntArray = colorArray.map(x => parseInt(x));
+    const colorIntArray = colorArray.map(x => parseFloat(x));
     return colorIntArray;
   } else {
     return colorArray;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 
 import { colorTypes } from "../utils/colorTypes";
-import { isLchOutOfRgbGamut } from "../utils/isLchOutOfRgbGamut";
+import { isOutOfSrgbGamut } from "../utils/isOutOfSrgbGamut";
 import { isValidColor } from "../utils/isValidColor";
 import { translatedColor } from "../utils/translatedColor";
 
@@ -38,7 +38,7 @@ const Input: React.FC<InputProps> = (props) => {
 
   const initInputState = () => {
     // show the gamut warning on load
-    if (colorType === colorTypes.lch && isLchOutOfRgbGamut(incomingColor)) {
+    if ([colorTypes.lch, colorTypes.oklch].includes(colorType) && isOutOfSrgbGamut(incomingColor)) {
       return inputStates.outOfFocusOutOfGamut;
     } else {
       return inputStates.outOfFocus;
@@ -53,7 +53,7 @@ const Input: React.FC<InputProps> = (props) => {
     setValue(changedValue);
 
     if (isValidColor(changedValue, colorType)) {
-      if (colorType === colorTypes.lch && isLchOutOfRgbGamut(changedValue)) {
+      if ([colorTypes.lch, colorTypes.oklch].includes(colorType) && isOutOfSrgbGamut(changedValue)) {
         setInputState(inputStates.inFocusValidValueOutOfGamut);
       } else {
         setInputState(inputStates.inFocusValidValue);
@@ -141,7 +141,7 @@ const Input: React.FC<InputProps> = (props) => {
         </label>
         {showGamutWarning && (
           <small className="gamut-warning">
-            ⚠️ This lch value is outside the RGB gamut; translated values are
+            ⚠️ This value is outside the sRGB gamut; translated values are
             approximated
           </small>
         )}

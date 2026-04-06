@@ -86,7 +86,7 @@ const Input: React.FC<InputProps> = (props) => {
       translatedIncomingColor !== value
     ) {
       setValue(translatedIncomingColor);
-      setInputState(getOutOfFocusState(translatedIncomingColor));
+      setInputState(getOutOfFocusState(incomingColor));
     }
     // disabling this because we only want to update when
     // translatedIncomingColor changes, but not value or inputState
@@ -99,7 +99,7 @@ const Input: React.FC<InputProps> = (props) => {
     translatedIncomingColor !== value
   ) {
     setValue(translatedIncomingColor);
-    setInputState(getOutOfFocusState(translatedIncomingColor));
+    setInputState(getOutOfFocusState(incomingColor));
   }
 
   const showGamutWarning =

@@ -69,6 +69,12 @@ describe("HSLa to RGBa conversion", () => {
     expect(hslaToRgba("hsla(0, 0%, 100%, 1)")[2]).toBe(255);
     expect(hslaToRgba("hsla(0, 0%, 100%, 1)")[3]).toBe(1);
   });
+
+  it("correct rgba for modern space syntax", () => {
+    expect(hslaToRgba("hsla(0 0% 0% / 1)")).toEqual([0, 0, 0, 1]);
+    expect(hslaToRgba("hsla(0 0% 100% / 1)")).toEqual([255, 255, 255, 1]);
+    expect(hslaToRgba("hsla(0 0% 0% / 0.5)")[3]).toBe(0.5);
+  });
 });
 
 describe("rgba to RGBA conversion", () => {
@@ -84,6 +90,12 @@ describe("rgba to RGBA conversion", () => {
     expect(rgbaToRgba("rgba(255, 255, 255, 1)")[1]).toBe(255);
     expect(rgbaToRgba("rgba(255, 255, 255, 1)")[2]).toBe(255);
     expect(rgbaToRgba("rgba(255, 255, 255, 1)")[3]).toBe(1);
+  });
+
+  it("correct rgba for modern space syntax", () => {
+    expect(rgbaToRgba("rgba(0 0 0 / 1)")).toEqual([0, 0, 0, 1]);
+    expect(rgbaToRgba("rgba(255 255 255 / 1)")).toEqual([255, 255, 255, 1]);
+    expect(rgbaToRgba("rgba(255 0 0 / 0.5)")).toEqual([255, 0, 0, 0.5]);
   });
 });
 

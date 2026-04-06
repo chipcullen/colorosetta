@@ -1,7 +1,7 @@
 import { rgb_array_to_LCH } from './w3conversions';
 
 import { hexToRgb, hslToRgb } from './toRgb';
-import { hex8ToRgba, hslaToRgba } from './toRgba';
+import { hex8ToRgba, hslaToRgba, normalizeModernSyntax } from './toRgba';
 import { colorStringToArray } from './colorStringToArray';
 
 const hex6ToLch = (hex6: string): Array<number> => {
@@ -36,7 +36,7 @@ const rgbToLch = (rgb: string): Array<number> => {
 }
 
 const rgbaToLch = (rgba: string): Array<number> => {
-  const rgbaArray = colorStringToArray(rgba, false, 5) as Array<string>;
+  const rgbaArray = colorStringToArray(normalizeModernSyntax(rgba), false, 5) as Array<string>;
 
   const rgbNumberArray = [parseInt(rgbaArray[0]), parseInt(rgbaArray[1]), parseInt(rgbaArray[2])]
 

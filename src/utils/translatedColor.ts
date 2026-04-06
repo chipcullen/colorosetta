@@ -98,6 +98,8 @@ const translatedColor = (
         case targetColorType === colorTypes.hex6:
         case targetColorType === colorTypes.picker:
           return rgbArrayToHex(rgbaOverlay);
+        case targetColorType === colorTypes.rgba:
+          return formatColor(rgbaAsRgbaArray, colorTypes.rgba);
         case targetColorType === colorTypes.hex8:
           return rgbaToHex8(color);
         case targetColorType === colorTypes.rgb:

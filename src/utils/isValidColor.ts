@@ -3,83 +3,44 @@ import { lowerCaseNamedColors } from "./namedColors";
 
 const isValidHex6 = (color: string): boolean => {
   // https://stackoverflow.com/a/8027444/1173898
-  if (/^(#)?[0-9A-F]{3}$/i.test(color) || /^(#)?[0-9A-F]{6}$/i.test(color)) {
-    return true;
-  } else {
-    return false;
-  }
+  return /^(#)?[0-9A-F]{3}$/i.test(color) || /^(#)?[0-9A-F]{6}$/i.test(color);
 };
 
 const isValidHex8 = (color: string): boolean => {
   // https://stackoverflow.com/a/8027444/1173898
-  if (/^(#)?[0-9A-F]{4}$/i.test(color) || /^(#)?[0-9A-F]{8}$/i.test(color)) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-const isValidRgba = (color: string): boolean => {
-  // https://rgxdb.com/r/GFYPX74
-  // @todo make sure values are 0-100 for % or 0-255 for unitless
-  // Legacy comma syntax: rgba(255, 255, 255, 0.5)
-  if (
-    /rgba\(\s*(-?\d+|-?\d*\.\d+(?=%))(%?)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/.test(
-      color,
-    )
-  ) {
-    return true;
-  }
-  // Modern space syntax: rgba(255 255 255 / 0.5)
-  if (
-    /rgba\(\s*(-?\d+|-?\d*\.\d+)(%?)\s+(-?\d+|-?\d*\.\d+)(\2)\s+(-?\d+|-?\d*\.\d+)(\2)\s*\/\s*(-?\d+|-?\d*\.\d+)\s*\)/.test(
-      color,
-    )
-  ) {
-    return true;
-  }
-  return false;
+  return /^(#)?[0-9A-F]{4}$/i.test(color) || /^(#)?[0-9A-F]{8}$/i.test(color);
 };
 
 const isValidRgb = (color: string): boolean => {
   // https://rgxdb.com/r/4LS1LCA
   // @todo make sure values are 0-100 for % or 0-255 for unitless
-  // Legacy comma syntax: rgb(255, 255, 255)
+  // Modern space syntax: rgb(255 255 255)
   if (
-    /rgb\(\s*(-?\d+|-?\d*\.\d+(?=%))(%?)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*\)/.test(
-      color,
-    )
+    /rgb\(\s*(-?\d+|-?\d*\.\d+)(%?)\s+(-?\d+|-?\d*\.\d+)(\2)\s+(-?\d+|-?\d*\.\d+)(\2)\s*\)/.test(color)
   ) {
     return true;
   }
-  // Modern space syntax: rgb(255 255 255)
+  // Legacy comma syntax: rgb(255, 255, 255)
   if (
-    /rgb\(\s*(-?\d+|-?\d*\.\d+)(%?)\s+(-?\d+|-?\d*\.\d+)(\2)\s+(-?\d+|-?\d*\.\d+)(\2)\s*\)/.test(
-      color,
-    )
+    /rgb\(\s*(-?\d+|-?\d*\.\d+(?=%))(%?)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*\)/.test(color)
   ) {
     return true;
   }
   return false;
 };
 
-const isValidHsla = (color: string): boolean => {
-  // https://rgxdb.com/r/6KT5NBF
-  // @todo make sure % are 0-100,
-  // add support for `deg` and `rad` and `turn`
-  // Legacy comma syntax: hsla(120, 100%, 50%, 0.5)
+const isValidRgba = (color: string): boolean => {
+  // https://rgxdb.com/r/GFYPX74
+  // @todo make sure values are 0-100 for % or 0-255 for unitless
+  // Modern space syntax: rgba(255 255 255 / 0.5)
   if (
-    /hsla\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/.test(
-      color,
-    )
+    /rgba\(\s*(-?\d+|-?\d*\.\d+)(%?)\s+(-?\d+|-?\d*\.\d+)(\2)\s+(-?\d+|-?\d*\.\d+)(\2)\s*\/\s*(-?\d+|-?\d*\.\d+)\s*\)/.test(color)
   ) {
     return true;
   }
-  // Modern space syntax: hsla(120 100% 50% / 0.5)
+  // Legacy comma syntax: rgba(255, 255, 255, 0.5)
   if (
-    /hsla\(\s*(-?\d+|-?\d*\.\d+)\s+(-?\d+|-?\d*\.\d+)%\s+(-?\d+|-?\d*\.\d+)%\s*\/\s*(-?\d+|-?\d*\.\d+)\s*\)/.test(
-      color,
-    )
+    /rgba\(\s*(-?\d+|-?\d*\.\d+(?=%))(%?)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*,\s*(-?\d+|-?\d*\.\d+(?=%))(\2)\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/.test(color)
   ) {
     return true;
   }
@@ -90,19 +51,34 @@ const isValidHsl = (color: string): boolean => {
   // https://rgxdb.com/r/6KT5NBF
   // @todo make sure % are 0-100,
   // add support for `deg` and `rad` and `turn`
-  // Legacy comma syntax: hsl(120, 100%, 50%)
+  // Modern space syntax: hsl(120 100% 50%)
   if (
-    /hsl\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*\)/.test(
-      color,
-    )
+    /hsl\(\s*(-?\d+|-?\d*\.\d+)\s+(-?\d+|-?\d*\.\d+)%\s+(-?\d+|-?\d*\.\d+)%\s*\)/.test(color)
   ) {
     return true;
   }
-  // Modern space syntax: hsl(120 100% 50%)
+  // Legacy comma syntax: hsl(120, 100%, 50%)
   if (
-    /hsl\(\s*(-?\d+|-?\d*\.\d+)\s+(-?\d+|-?\d*\.\d+)%\s+(-?\d+|-?\d*\.\d+)%\s*\)/.test(
-      color,
-    )
+    /hsl\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*\)/.test(color)
+  ) {
+    return true;
+  }
+  return false;
+};
+
+const isValidHsla = (color: string): boolean => {
+  // https://rgxdb.com/r/6KT5NBF
+  // @todo make sure % are 0-100,
+  // add support for `deg` and `rad` and `turn`
+  // Modern space syntax: hsla(120 100% 50% / 0.5)
+  if (
+    /hsla\(\s*(-?\d+|-?\d*\.\d+)\s+(-?\d+|-?\d*\.\d+)%\s+(-?\d+|-?\d*\.\d+)%\s*\/\s*(-?\d+|-?\d*\.\d+)\s*\)/.test(color)
+  ) {
+    return true;
+  }
+  // Legacy comma syntax: hsla(120, 100%, 50%, 0.5)
+  if (
+    /hsla\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/.test(color)
   ) {
     return true;
   }
@@ -112,13 +88,9 @@ const isValidHsl = (color: string): boolean => {
 const isValidLch = (color: string): boolean => {
   // @todo make sure % are 0-100,
   // add support for `deg` and `rad` and `turn`
-  let regex =
+  const regex =
     /lch\(((?=\.\d|\d)(?:\d+)?(?:\.?\d*))?%\s+((?=\.\d|\d)(?:\d+)?(?:\.?\d*))(?:(\d+))?\s+((?=\.\d|\d)(?:\d+)?(?:\.?\d*))(?:(\d+))?(\s+(\/\s+((?=\.\d|\d)(?:\d+)?(?:\.?\d*))(\d+)))?%?\)/i;
-  if (regex.test(color)) {
-    return true;
-  } else {
-    return false;
-  }
+  return regex.test(color);
 };
 
 const isValidColor = (color: string, colorType: colorTypes): boolean => {
@@ -127,10 +99,10 @@ const isValidColor = (color: string, colorType: colorTypes): boolean => {
     case colorType === colorTypes.hex6 && isValidHex6(color):
     case colorType === colorTypes.picker && isValidHex6(color):
     case colorType === colorTypes.hex8 && isValidHex8(color):
-    case colorType === colorTypes.rgba && isValidRgba(color):
     case colorType === colorTypes.rgb && isValidRgb(color):
-    case colorType === colorTypes.hsla && isValidHsla(color):
+    case colorType === colorTypes.rgba && isValidRgba(color):
     case colorType === colorTypes.hsl && isValidHsl(color):
+    case colorType === colorTypes.hsla && isValidHsla(color):
     case colorType === colorTypes.lch && isValidLch(color):
     case colorType === colorTypes.named &&
       lowerCaseNamedColors.includes(color.toLowerCase()):

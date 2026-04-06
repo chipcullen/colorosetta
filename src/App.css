@@ -3,7 +3,7 @@
   --swatch-size: clamp(6.25rem, 10vw, 12.5rem);
   --gray: #cccccc;
   --input-width: clamp(12.5rem, 34vw, 35rem);
-    --label-offset: clamp(4.5rem, 9vw, 9rem);
+  --label-offset: clamp(4.5rem, 9vw, 9rem);
 }
 
 .App {
@@ -30,7 +30,7 @@ p {
 }
 
 .inputs,
-.lch-input {
+.named-input {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -38,16 +38,14 @@ p {
 }
 
 @media (min-width: 75rem) {
-  .lch-input {
-      left: 0;
-    }
+  .named-input {
+    left: 0;
+  }
   .inputs {
     display: block;
     columns: 2;
     left: 0;
   }
-
-
 }
 
 label {
@@ -61,7 +59,7 @@ label {
   text-align: right;
 }
 
-input[type=text] {
+input[type="text"] {
   width: var(--input-width);
   font-size: clamp(1rem, 2vw, 2rem);
   padding: 1.2vw;
@@ -70,7 +68,10 @@ input[type=text] {
   margin-bottom: 2rem;
   margin-left: 1vw;
   font-family: "Work Sans", Helvetica, sans-serif;
-  transition: border-color ease-in .2s, border-radius ease-in .2s, background-color ease-in .2s;
+  transition:
+    border-color ease-in 0.2s,
+    border-radius ease-in 0.2s,
+    background-color ease-in 0.2s;
 }
 
 .color-input-wrapper {
@@ -82,18 +83,17 @@ input[type=text] {
   text-align: left;
 }
 
-input[type=color] {
+input[type="color"] {
   position: relative;
   left: -1.2vw;
 }
 
 input:focus {
   border-color: blue;
-  border-radius: clamp(.5rem, 1vw, 1rem);;
+  border-radius: clamp(0.5rem, 1vw, 1rem);
   outline: none;
   background-color: hsla(60, 100%, 50%, 0.2);
 }
-
 
 .swatch-wrapper {
   --square-size: calc(var(--swatch-size) / 5);
@@ -118,14 +118,18 @@ input:focus {
 }
 
 .swatch-wrapper::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255,255,255,1) 70%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 70%
+  );
 }
 
 .swatch {

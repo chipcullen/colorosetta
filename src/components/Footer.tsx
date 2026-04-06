@@ -19,8 +19,8 @@ const Footer: React.FC = () => {
           this project on github
         </a>{" "}
         |{" "}
-        <a href="https://twitter.com/chipcullen">
-          i'm occasionally on twitter
+        <a href="https://mastodon.social/@chipcullen" rel="me">
+          i'm occasionally on mastodon
         </a>
         <br />
         thank you to <a href="https://jonkantner.com/">jon kanter</a> for much of the conversion logic,<br /> and to <a href="https://lea.verou.me/">lea verou</a> and <a href="https://svgees.us/">chris lilley</a> for the fiddly lch bits.

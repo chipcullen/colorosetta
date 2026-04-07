@@ -4,7 +4,9 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/54dd2d7f-b4fe-497d-9558-915ad50cb725/deploy-status)](https://app.netlify.com/sites/colorosetta/deploys)
 
-A simple utility to help translate color names
+A simple utility to help translate color names.
+
+[Also available as a VS Code Extension](https://marketplace.visualstudio.com/items?itemName=ChipCullen.colorosetta&ssr=false#overview)
 
 This project uses [Vite](https://vite.dev/) and [React](https://react.dev/).
 

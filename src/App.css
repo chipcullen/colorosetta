@@ -30,7 +30,7 @@ p {
 }
 
 .inputs,
-.named-input {
+.p3-input {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -38,8 +38,12 @@ p {
 }
 
 @media (min-width: 75rem) {
-  .named-input {
+  .p3-input {
     left: 0;
+
+    input[type="text"] {
+      width: clamp(12.5rem, 40vw, 45rem);
+    }
   }
   .inputs {
     display: block;

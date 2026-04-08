@@ -63,15 +63,6 @@ const App: React.FC = () => {
         />
 
         <Input
-          labelText="p3"
-          colorType={colorTypes.p3}
-          placeHolder="color(display-p3 1 0 0)"
-          onChange={onInputChange}
-          incomingColor={incomingColor}
-          incomingColorType={incomingColorType}
-        />
-
-        <Input
           labelText="hsl"
           colorType={colorTypes.hsl}
           placeHolder="hsl(100 100% 50%)"
@@ -99,6 +90,14 @@ const App: React.FC = () => {
         />
 
         <Input
+          labelText="named"
+          colorType={colorTypes.named}
+          placeHolder="RebeccaPurple"
+          onChange={onInputChange}
+          incomingColor={incomingColor}
+          incomingColorType={incomingColorType}
+        />
+        <Input
           labelText="picker"
           colorType={colorTypes.picker}
           placeHolder=""
@@ -107,11 +106,11 @@ const App: React.FC = () => {
           incomingColorType={incomingColorType}
         />
       </section>
-      <section className="named-input">
+      <section className="p3-input">
         <Input
-          labelText="named"
-          colorType={colorTypes.named}
-          placeHolder="RebeccaPurple"
+          labelText="p3"
+          colorType={colorTypes.p3}
+          placeHolder="color(display-p3 1 0 0)"
           onChange={onInputChange}
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}

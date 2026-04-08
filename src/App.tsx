@@ -63,15 +63,6 @@ const App: React.FC = () => {
         />
 
         <Input
-          labelText="rgba"
-          colorType={colorTypes.rgba}
-          placeHolder="rgba(255 0 0 / 1)"
-          onChange={onInputChange}
-          incomingColor={incomingColor}
-          incomingColorType={incomingColorType}
-        />
-
-        <Input
           labelText="p3"
           colorType={colorTypes.p3}
           placeHolder="color(display-p3 1 0 0)"
@@ -84,15 +75,6 @@ const App: React.FC = () => {
           labelText="hsl"
           colorType={colorTypes.hsl}
           placeHolder="hsl(100 100% 50%)"
-          onChange={onInputChange}
-          incomingColor={incomingColor}
-          incomingColorType={incomingColorType}
-        />
-
-        <Input
-          labelText="hsla"
-          colorType={colorTypes.hsla}
-          placeHolder="hsla(100 100% 50% / 1)"
           onChange={onInputChange}
           incomingColor={incomingColor}
           incomingColorType={incomingColorType}

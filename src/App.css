@@ -59,6 +59,10 @@ label {
   text-align: right;
 }
 
+.input-and-copy-button {
+  position: relative;
+}
+
 input[type="text"] {
   width: var(--input-width);
   font-size: clamp(1rem, 2vw, 2rem);
@@ -72,6 +76,36 @@ input[type="text"] {
     border-color ease-in 0.2s,
     border-radius ease-in 0.2s,
     background-color ease-in 0.2s;
+}
+
+.copy-button {
+  font-family: inherit;
+  font-size: clamp(0.6rem, 1.2vw, 1.2rem);
+  padding: 0.3em 0.6em;
+  margin-left: 0.5vw;
+  cursor: pointer;
+  border: 2px solid var(--black);
+  background: white;
+  border-radius: clamp(0.5rem, 1vw, 1rem);
+  transition: background-color ease-in 0.2s;
+  vertical-align: middle;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 1vw;
+}
+
+.copy-button:hover {
+  background: var(--gray);
+}
+
+.copy-button:active {
+  transform: scale(0.95) translateY(-50%);
+}
+
+/* hide the copy button if the input is empty */
+input[type="text"][value=""] + .copy-button {
+  display: none;
 }
 
 .color-input-wrapper {

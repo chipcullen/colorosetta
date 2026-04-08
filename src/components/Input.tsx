@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 
 import { colorTypes } from "../utils/colorTypes";
 import { isOutOfSrgbGamut } from "../utils/isOutOfSrgbGamut";
@@ -37,7 +37,10 @@ const Input: React.FC<InputProps> = (props) => {
   } = props;
 
   const getOutOfFocusState = (colorValue: string) => {
-    if ([colorTypes.lch, colorTypes.oklch, colorTypes.p3].includes(colorType) && isOutOfSrgbGamut(colorValue)) {
+    if (
+      [colorTypes.lch, colorTypes.oklch, colorTypes.p3].includes(colorType) &&
+      isOutOfSrgbGamut(colorValue)
+    ) {
       return inputStates.outOfFocusOutOfGamut;
     }
     return inputStates.outOfFocus;
@@ -47,13 +50,31 @@ const Input: React.FC<InputProps> = (props) => {
 
   const [value, setValue] = useState(incomingColor);
   const [inputState, setInputState] = useState(initInputState());
+  const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const copyHandler = () => {
+    navigator.clipboard.writeText(value);
+    setCopied(true);
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    copyTimeoutRef.current = setTimeout(() => setCopied(false), 3000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const localChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const changedValue = e.currentTarget.value;
     setValue(changedValue);
 
     if (isValidColor(changedValue, colorType)) {
-      if ([colorTypes.lch, colorTypes.oklch, colorTypes.p3].includes(colorType) && isOutOfSrgbGamut(changedValue)) {
+      if (
+        [colorTypes.lch, colorTypes.oklch, colorTypes.p3].includes(colorType) &&
+        isOutOfSrgbGamut(changedValue)
+      ) {
         setInputState(inputStates.inFocusValidValueOutOfGamut);
       } else {
         setInputState(inputStates.inFocusValidValue);
@@ -94,7 +115,8 @@ const Input: React.FC<InputProps> = (props) => {
   }, [translatedIncomingColor]);
 
   if (
-    (inputState === inputStates.outOfFocus || inputState === inputStates.outOfFocusOutOfGamut) &&
+    (inputState === inputStates.outOfFocus ||
+      inputState === inputStates.outOfFocusOutOfGamut) &&
     translatedIncomingColor !== colorTypes.none &&
     translatedIncomingColor !== value
   ) {
@@ -130,15 +152,20 @@ const Input: React.FC<InputProps> = (props) => {
       <div className="input-wrapper">
         <label>
           <span className="label-text">{labelText}:</span>
-          <input
-            type="text"
-            placeholder={placeHolder}
-            onChange={localChangeHandler}
-            onFocus={() => setInputState(inputStates.inFocus)}
-            onBlur={blurHandler}
-            value={value}
-            name={colorType}
-          />
+          <span className="input-and-copy-button">
+            <input
+              type="text"
+              placeholder={placeHolder}
+              onChange={localChangeHandler}
+              onFocus={() => setInputState(inputStates.inFocus)}
+              onBlur={blurHandler}
+              value={value}
+              name={colorType}
+            />
+            <button className="copy-button" onClick={copyHandler}>
+              {copied ? "copied!" : "copy"}
+            </button>
+          </span>
         </label>
         {showGamutWarning && (
           <small className="gamut-warning">

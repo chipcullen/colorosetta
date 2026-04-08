@@ -1,20 +1,24 @@
-import Color from 'colorjs.io';
-import { colorTypes } from './colorTypes';
-import { calculateOverlay } from './calculateOverlay';
-import { rgbToNamed } from './toNamed';
+import Color from "colorjs.io";
+import { colorTypes } from "./colorTypes";
+import { calculateOverlay } from "./calculateOverlay";
+import { rgbToNamed } from "./toNamed";
 
 const translatedColor = (
   color: string,
   startingColorType: colorTypes,
-  targetColorType: colorTypes
+  targetColorType: colorTypes,
 ): string => {
-  if (startingColorType === targetColorType) {
+  const isLegacyAlias =
+    (startingColorType === colorTypes.rgb && color.startsWith("rgba(")) ||
+    (startingColorType === colorTypes.hsl && color.startsWith("hsla("));
+
+  if (startingColorType === targetColorType && !isLegacyAlias) {
     return color;
   }
 
   const hexTypes = [colorTypes.hex6, colorTypes.hex8, colorTypes.picker];
   const normalizedColor =
-    hexTypes.includes(startingColorType) && !color.startsWith('#')
+    hexTypes.includes(startingColorType) && !color.startsWith("#")
       ? `#${color}`
       : color;
 
@@ -22,18 +26,20 @@ const translatedColor = (
   try {
     parsed = new Color(normalizedColor);
   } catch {
-    return 'none';
+    return "none";
   }
 
   // For alpha-bearing types, flatten to RGB on white before converting
-  // to formats that don't carry alpha (hex6, rgb, hsl, named)
+  // to formats that don't carry alpha (hex6, named, picker)
   const hasAlpha = parsed.alpha < 1;
   const needsOverlay =
     hasAlpha &&
-    [colorTypes.hex6, colorTypes.picker, colorTypes.named].includes(targetColorType);
+    [colorTypes.hex6, colorTypes.picker, colorTypes.named].includes(
+      targetColorType,
+    );
 
-  const srgb = parsed.toGamut({space: 'srgb'}).to('srgb');
-  const [r, g, b] = srgb.coords.map((v: number) => Math.round(v * 255));
+  const srgb = parsed.toGamut({ space: "srgb" }).to("srgb");
+  const [r, g, b] = srgb.coords.map((v: number | null) => Math.round((v ?? 0) * 255));
   const a = parsed.alpha;
 
   const overlaid = needsOverlay ? calculateOverlay([r, g, b, a]) : null;
@@ -42,47 +48,51 @@ const translatedColor = (
     case colorTypes.hex6:
     case colorTypes.picker: {
       const [or, og, ob] = overlaid ?? [r, g, b];
-      return `#${[or, og, ob].map(v => v.toString(16).padStart(2, '0')).join('')}`;
+      return `#${[or, og, ob].map((v) => v.toString(16).padStart(2, "0")).join("")}`;
     }
 
     case colorTypes.hex8: {
       const alpha255 = Math.round(a * 255);
-      return `#${[r, g, b, alpha255].map(v => v.toString(16).padStart(2, '0')).join('')}`;
+      return `#${[r, g, b, alpha255].map((v) => v.toString(16).padStart(2, "0")).join("")}`;
     }
 
     case colorTypes.rgb: {
-      const alphaStr = a < 1 ? ` / ${Math.round(a * 100)}%` : '';
-      return `rgb(${r} ${g} ${b}${alphaStr})`;
+      return `rgb(${r} ${g} ${b} / ${parseFloat((a * 100).toFixed(2))}%)`;
     }
 
     case colorTypes.hsl: {
-      const hsl = srgb.to('hsl');
-      const [h, s, l] = hsl.coords.map((v: number | null) => Math.round(v ?? 0));
-      const alphaStr = a < 1 ? ` / ${Math.round(a * 100)}%` : '';
-      return `hsl(${h} ${s}% ${l}%${alphaStr})`;
+      const hsl = srgb.to("hsl");
+      const [h, s, l] = hsl.coords.map((v: number | null) =>
+        Math.round(v ?? 0),
+      );
+      return `hsl(${h} ${s}% ${l}% / ${parseFloat((a * 100).toFixed(2))}%)`;
     }
 
     case colorTypes.lch: {
-      const lch = parsed.to('lch');
-      const [l, c, h] = lch.coords.map((v: number | null) => +((v ?? 0).toFixed(2)));
-      const alphaStr = a < 1 ? ` / ${a}` : '';
+      const lch = parsed.to("lch");
+      const [l, c, h] = lch.coords.map(
+        (v: number | null) => +(v ?? 0).toFixed(2),
+      );
+      const alphaStr = a < 1 ? ` / ${a}` : "";
       return `lch(${l}% ${c} ${h}${alphaStr})`;
     }
 
     case colorTypes.oklch: {
-      const oklch = parsed.to('oklch');
+      const oklch = parsed.to("oklch");
       const coords = oklch.coords;
       const l = +((coords[0] ?? 0) * 100).toFixed(2);
-      const c = +((coords[1] ?? 0).toFixed(2));
-      const h = +((coords[2] ?? 0).toFixed(2));
-      const alphaStr = a < 1 ? ` / ${a}` : '';
+      const c = +(coords[1] ?? 0).toFixed(2);
+      const h = +(coords[2] ?? 0).toFixed(2);
+      const alphaStr = a < 1 ? ` / ${a}` : "";
       return `oklch(${l}% ${c} ${h}${alphaStr})`;
     }
 
     case colorTypes.p3: {
-      const p3 = parsed.to('p3');
-      const [pr, pg, pb] = p3.coords.map((v: number | null) => +((v ?? 0).toFixed(2)));
-      const alphaStr = a < 1 ? ` / ${a}` : '';
+      const p3 = parsed.to("p3");
+      const [pr, pg, pb] = p3.coords.map(
+        (v: number | null) => +(v ?? 0).toFixed(2),
+      );
+      const alphaStr = a < 1 ? ` / ${a}` : "";
       return `color(display-p3 ${pr} ${pg} ${pb}${alphaStr})`;
     }
 
@@ -92,7 +102,7 @@ const translatedColor = (
     }
 
     default:
-      return 'none';
+      return "none";
   }
 };
 

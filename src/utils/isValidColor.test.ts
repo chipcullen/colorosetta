@@ -129,8 +129,12 @@ describe('isValidColor', () => {
     expect(isValidColor('#ffffffff', colorTypes.hex8)).toBe(true);
     expect(isValidColor('hsl(100, 100%, 100%)', colorTypes.hsl)).toBe(true);
     expect(isValidColor('hsl(100 100% 50% / 0.5)', colorTypes.hsl)).toBe(true);
+    expect(isValidColor('hsla(100, 100%, 50%, 0.5)', colorTypes.hsl)).toBe(true);
+    expect(isValidColor('hsla(100 100% 50% / 0.5)', colorTypes.hsl)).toBe(true);
     expect(isValidColor('rgb(100, 100, 100)', colorTypes.rgb)).toBe(true);
     expect(isValidColor('rgb(100 100 100 / 0.5)', colorTypes.rgb)).toBe(true);
+    expect(isValidColor('rgba(100, 100, 100, 0.5)', colorTypes.rgb)).toBe(true);
+    expect(isValidColor('rgba(100 100 100 / 0.5)', colorTypes.rgb)).toBe(true);
   });
 
     it('return false for invalid colors', () => {

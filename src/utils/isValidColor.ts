@@ -1,6 +1,6 @@
-import Color from 'colorjs.io';
-import { colorTypes } from './colorTypes';
-import { lowerCaseNamedColors } from './namedColors';
+import Color from "colorjs.io";
+import { colorTypes } from "./colorTypes";
+import { lowerCaseNamedColors } from "./namedColors";
 
 const canParseColor = (color: string): boolean => {
   try {
@@ -21,24 +21,32 @@ const isValidHex8 = (color: string): boolean => {
   return /^(#)?[0-9A-F]{4}$/i.test(color) || /^(#)?[0-9A-F]{8}$/i.test(color);
 };
 
+// accepts either modern rgb/rgba syntax
 const isValidRgb = (color: string): boolean => {
-  return (color.startsWith('rgb(') || color.startsWith('rgba(')) && canParseColor(color);
+  return (
+    (color.startsWith("rgb(") || color.startsWith("rgba(")) &&
+    canParseColor(color)
+  );
 };
 
+// accepts either modern hsl/hsla syntax
 const isValidHsl = (color: string): boolean => {
-  return (color.startsWith('hsl(') || color.startsWith('hsla(')) && canParseColor(color);
+  return (
+    (color.startsWith("hsl(") || color.startsWith("hsla(")) &&
+    canParseColor(color)
+  );
 };
 
 const isValidLch = (color: string): boolean => {
-  return color.startsWith('lch(') && canParseColor(color);
+  return color.startsWith("lch(") && canParseColor(color);
 };
 
 const isValidOklch = (color: string): boolean => {
-  return color.startsWith('oklch(') && canParseColor(color);
+  return color.startsWith("oklch(") && canParseColor(color);
 };
 
 const isValidP3 = (color: string): boolean => {
-  return color.startsWith('color(display-p3') && canParseColor(color);
+  return color.startsWith("color(display-p3") && canParseColor(color);
 };
 
 const isValidColor = (color: string, colorType: colorTypes): boolean => {

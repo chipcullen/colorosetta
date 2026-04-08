@@ -57,7 +57,8 @@ const translatedColor = (
     }
 
     case colorTypes.rgb: {
-      return `rgb(${r} ${g} ${b} / ${parseFloat((a * 100).toFixed(2))}%)`;
+      const alphaStr = a < 1 ? ` / ${parseFloat((a * 100).toFixed(2))}%` : "";
+      return `rgb(${r} ${g} ${b}${alphaStr})`;
     }
 
     case colorTypes.hsl: {
@@ -65,7 +66,8 @@ const translatedColor = (
       const [h, s, l] = hsl.coords.map((v: number | null) =>
         Math.round(v ?? 0),
       );
-      return `hsl(${h} ${s}% ${l}% / ${parseFloat((a * 100).toFixed(2))}%)`;
+      const alphaStr = a < 1 ? ` / ${parseFloat((a * 100).toFixed(2))}%` : "";
+      return `hsl(${h} ${s}% ${l}%${alphaStr})`;
     }
 
     case colorTypes.lch: {

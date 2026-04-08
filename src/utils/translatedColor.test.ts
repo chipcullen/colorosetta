@@ -18,11 +18,11 @@ describe('translatedColor', () => {
   });
 
   it('Should return correct translated colors', () => {
-    expect(translatedColor(`#fff`, colorTypes.hex6, colorTypes.rgb)).toBe(`rgb(255 255 255 / 100%)`);
+    expect(translatedColor(`#fff`, colorTypes.hex6, colorTypes.rgb)).toBe(`rgb(255 255 255)`);
     expect(translatedColor(`#fff`, colorTypes.hex6, colorTypes.named)).toBe(`White`);
     expect(translatedColor(`#ff00ff`, colorTypes.hex6, colorTypes.named)).toBe(`Fuchsia`);
     expect(translatedColor(`rgb(255, 0, 0)`, colorTypes.rgb, colorTypes.named)).toBe(`Red`);
-    expect(translatedColor(`rgb(255, 0, 0)`, colorTypes.rgb, colorTypes.hsl)).toBe('hsl(0 100% 50% / 100%)');
+    expect(translatedColor(`rgb(255, 0, 0)`, colorTypes.rgb, colorTypes.hsl)).toBe('hsl(0 100% 50%)');
     expect(translatedColor(`hsl(200, 66%, 75%)`, colorTypes.hsl, colorTypes.hex6)).toBe('#95cde9');
     expect(translatedColor(`lch(54.291% 106.837 40.858)`, colorTypes.lch, colorTypes.hex6)).toBe('#ff0000');
     expect(translatedColor(`lch(54.291% 106.837 40.858 / 50%)`, colorTypes.lch, colorTypes.hex8)).toBe('#ff000080');
@@ -30,7 +30,7 @@ describe('translatedColor', () => {
   });
 
   it('Should translate hex without # prefix', () => {
-    expect(translatedColor(`fff`, colorTypes.hex6, colorTypes.rgb)).toBe(`rgb(255 255 255 / 100%)`);
+    expect(translatedColor(`fff`, colorTypes.hex6, colorTypes.rgb)).toBe(`rgb(255 255 255)`);
     expect(translatedColor(`ff0000`, colorTypes.hex6, colorTypes.named)).toBe(`Red`);
     expect(translatedColor(`ff000080`, colorTypes.hex8, colorTypes.rgb)).toBe(`rgb(255 0 0 / 50.2%)`);
   });
@@ -44,9 +44,9 @@ describe('translatedColor', () => {
 
   it('Should normalize legacy rgba/hsla aliases when same-type', () => {
     expect(translatedColor(`rgba(255 0 0 / 0.5)`, colorTypes.rgb, colorTypes.rgb)).toBe('rgb(255 0 0 / 50%)');
-    expect(translatedColor(`rgba(255, 0, 0, 1)`, colorTypes.rgb, colorTypes.rgb)).toBe('rgb(255 0 0 / 100%)');
+    expect(translatedColor(`rgba(255, 0, 0, 1)`, colorTypes.rgb, colorTypes.rgb)).toBe('rgb(255 0 0)');
     expect(translatedColor(`hsla(0 100% 50% / 0.5)`, colorTypes.hsl, colorTypes.hsl)).toBe('hsl(0 100% 50% / 50%)');
-    expect(translatedColor(`hsla(0, 100%, 50%, 1)`, colorTypes.hsl, colorTypes.hsl)).toBe('hsl(0 100% 50% / 100%)');
+    expect(translatedColor(`hsla(0, 100%, 50%, 1)`, colorTypes.hsl, colorTypes.hsl)).toBe('hsl(0 100% 50%)');
   });
 
   it('Should translate from oklch to oklch unchanged', () => {
@@ -55,7 +55,7 @@ describe('translatedColor', () => {
 
   it('Should translate display-p3 to other formats', () => {
     expect(translatedColor(`color(display-p3 1 0 0)`, colorTypes.p3, colorTypes.hex6)).toBe('#ff0b0c');
-    expect(translatedColor(`color(display-p3 1 1 1)`, colorTypes.p3, colorTypes.rgb)).toBe('rgb(255 255 255 / 100%)');
+    expect(translatedColor(`color(display-p3 1 1 1)`, colorTypes.p3, colorTypes.rgb)).toBe('rgb(255 255 255)');
     expect(translatedColor(`color(display-p3 0 0 0)`, colorTypes.p3, colorTypes.hex6)).toBe('#000000');
     expect(translatedColor(`color(display-p3 1 0 0 / 0.5)`, colorTypes.p3, colorTypes.rgb)).toBeTruthy();
   });

@@ -30,20 +30,16 @@ describe("Type Of Color", () => {
     expect(typeOfColor("ffffff0A")).toBe("hex8");
   });
 
-  it("returns rgba", () => {
-    expect(typeOfColor("rgba(255, 255, 255, 1)")).toBe("rgba");
-  });
-
   it("returns rgb", () => {
     expect(typeOfColor("rgb(255, 255, 255)")).toBe("rgb");
-  });
-
-  it("returns hsla", () => {
-    expect(typeOfColor("hsla(0, 0%, 100, 1)")).toBe("hsla");
+    expect(typeOfColor("rgb(255 0 0 / 0.5)")).toBe("rgb");
+    expect(typeOfColor("rgba(255, 255, 255, 1)")).toBe("rgb");
   });
 
   it("returns hsl", () => {
     expect(typeOfColor("hsl(0, 0%, 100)")).toBe("hsl");
+    expect(typeOfColor("hsl(0 100% 50% / 0.5)")).toBe("hsl");
+    expect(typeOfColor("hsla(0, 0%, 100, 1)")).toBe("hsl");
   });
 
   it("returns lch", () => {

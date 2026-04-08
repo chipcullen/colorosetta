@@ -1,4 +1,4 @@
-import { isValidColor, isValidHex6, isValidHex8, isValidRgb, isValidRgba, isValidHsl, isValidHsla, isValidLch, isValidOklch, isValidP3 } from './isValidColor';
+import { isValidColor, isValidHex6, isValidHex8, isValidRgb, isValidHsl, isValidLch, isValidOklch, isValidP3 } from './isValidColor';
 import { colorTypes } from './colorTypes';
 
 
@@ -47,30 +47,13 @@ describe('isValidRgb', () => {
     expect(isValidRgb('rgb(255 255 255)')).toBe(true);
     expect(isValidRgb('rgb(0 0 0)')).toBe(true);
     expect(isValidRgb('rgb(100% 100% 100%)')).toBe(true);
+    expect(isValidRgb('rgb(255 0 0 / 0.5)')).toBe(true);
+    expect(isValidRgb('rgba(255 0 0 / 0.5)')).toBe(true);
   });
 
   it('return false on invalid rgb values', () => {
     expect(isValidRgb('rgb (255, 255, 255)')).toBe(false);
     expect(isValidRgb('not-rgb(255, 255, 255)')).toBe(false);
-  });
-});
-
-describe('isValidRgba', () => {
-  it('return true on valid rgba values', () => {
-    expect(isValidRgba('rgba(100%, 100%, 100%, 1)')).toBe(true);
-    expect(isValidRgba('rgba(255, 255, 255, 0.5)')).toBe(true);
-    expect(isValidRgba('rgba(255,255,255,0.5)')).toBe(true);
-  });
-
-  it('return true on valid modern syntax rgba values', () => {
-    expect(isValidRgba('rgba(255 255 255 / 0.5)')).toBe(true);
-    expect(isValidRgba('rgba(0 0 0 / 1)')).toBe(true);
-    expect(isValidRgba('rgba(100% 100% 100% / 0.5)')).toBe(true);
-  });
-
-  it('return false on invalid rgba values', () => {
-    expect(isValidRgba('rgb(100%, 100%, 100%)')).toBe(false);
-    expect(isValidRgba('hsl(100, 100%, 100%)')).toBe(false);
   });
 });
 
@@ -83,28 +66,13 @@ describe('isValidHsl', () => {
   it('return true on valid modern syntax hsl values', () => {
     expect(isValidHsl('hsl(100 100% 100%)')).toBe(true);
     expect(isValidHsl('hsl(0 0% 0%)')).toBe(true);
+    expect(isValidHsl('hsl(0 100% 50% / 0.5)')).toBe(true);
+    expect(isValidHsl('hsla(0 100% 50% / 0.5)')).toBe(true);
   });
 
   it('return false on invalid hsl values', () => {
     expect(isValidHsl('hsl(100%, 100%, 100%)')).toBe(false);
     expect(isValidHsl('hsl(100%, 255, 100%)')).toBe(false);
-  });
-});
-
-describe('isValidHsla', () => {
-  it('return true on valid hsla values', () => {
-    expect(isValidHsla('hsla(100, 100%, 100%, 0.5)')).toBe(true);
-    expect(isValidHsla('hsla(100,100%,100%, 1)')).toBe(true);
-  });
-
-  it('return true on valid modern syntax hsla values', () => {
-    expect(isValidHsla('hsla(100 100% 100% / 0.5)')).toBe(true);
-    expect(isValidHsla('hsla(0 0% 0% / 1)')).toBe(true);
-  });
-
-  it('return false on invalid hsla values', () => {
-    expect(isValidHsla('hsla(100%, 100%, 100%)')).toBe(false);
-    expect(isValidHsla('hsla (100%, 255, 100%, 1)')).toBe(false);
   });
 });
 
@@ -159,18 +127,16 @@ describe('isValidColor', () => {
     expect(isValidColor('purple', colorTypes.named)).toBe(true);
     expect(isValidColor('#ffffff', colorTypes.hex6)).toBe(true);
     expect(isValidColor('#ffffffff', colorTypes.hex8)).toBe(true);
-    expect(isValidColor('hsla(100, 100%, 100%, 0.5)', colorTypes.hsla)).toBe(true);
     expect(isValidColor('hsl(100, 100%, 100%)', colorTypes.hsl)).toBe(true);
-    expect(isValidColor('rgba(100, 100, 100, 0.5)', colorTypes.rgba)).toBe(true);
+    expect(isValidColor('hsl(100 100% 50% / 0.5)', colorTypes.hsl)).toBe(true);
     expect(isValidColor('rgb(100, 100, 100)', colorTypes.rgb)).toBe(true);
+    expect(isValidColor('rgb(100 100 100 / 0.5)', colorTypes.rgb)).toBe(true);
   });
 
     it('return false for invalid colors', () => {
     expect(isValidColor('purplee', colorTypes.named)).toBe(false);
     expect(isValidColor('#ffffff', colorTypes.hex8)).toBe(false);
     expect(isValidColor('#fffffff', colorTypes.hex6)).toBe(false);
-    expect(isValidColor('hsla(100, 100%, 100%, 0.5)', colorTypes.rgba)).toBe(false);
     expect(isValidColor('rgb(100, 100, 100)', colorTypes.hsl)).toBe(false);
-    expect(isValidColor('rgb(100, 100, 100)', colorTypes.rgba)).toBe(false);
   });
 });

@@ -1,7 +1,7 @@
 import Color from 'colorjs.io';
 import { colorTypes } from './colorTypes';
 import { calculateOverlay } from './calculateOverlay';
-import { rgbToNamed, rgbaToNamed } from './toNamed';
+import { rgbToNamed } from './toNamed';
 
 const translatedColor = (
   color: string,
@@ -30,7 +30,7 @@ const translatedColor = (
   const hasAlpha = parsed.alpha < 1;
   const needsOverlay =
     hasAlpha &&
-    [colorTypes.hex6, colorTypes.picker, colorTypes.rgb, colorTypes.hsl, colorTypes.named].includes(targetColorType);
+    [colorTypes.hex6, colorTypes.picker, colorTypes.named].includes(targetColorType);
 
   const srgb = parsed.toGamut({space: 'srgb'}).to('srgb');
   const [r, g, b] = srgb.coords.map((v: number) => Math.round(v * 255));
@@ -51,25 +51,15 @@ const translatedColor = (
     }
 
     case colorTypes.rgb: {
-      const [or, og, ob] = overlaid ?? [r, g, b];
-      return `rgb(${or} ${og} ${ob})`;
+      const alphaStr = a < 1 ? ` / ${Math.round(a * 100)}%` : '';
+      return `rgb(${r} ${g} ${b}${alphaStr})`;
     }
-
-    case colorTypes.rgba:
-      return `rgba(${r} ${g} ${b} / ${a})`;
 
     case colorTypes.hsl: {
-      const [or, og, ob] = overlaid ?? [r, g, b];
-      const flat = new Color(`srgb`, [or / 255, og / 255, ob / 255]);
-      const hsl = flat.to('hsl');
-      const [h, s, l] = hsl.coords.map((v: number | null) => Math.round(v ?? 0));
-      return `hsl(${h} ${s}% ${l}%)`;
-    }
-
-    case colorTypes.hsla: {
       const hsl = srgb.to('hsl');
       const [h, s, l] = hsl.coords.map((v: number | null) => Math.round(v ?? 0));
-      return `hsla(${h} ${s}% ${l}% / ${a})`;
+      const alphaStr = a < 1 ? ` / ${Math.round(a * 100)}%` : '';
+      return `hsl(${h} ${s}% ${l}%${alphaStr})`;
     }
 
     case colorTypes.lch: {
@@ -98,8 +88,7 @@ const translatedColor = (
 
     case colorTypes.named: {
       const [or, og, ob] = overlaid ?? [r, g, b];
-      if (a === 1) return rgbToNamed([or, og, ob]);
-      return rgbaToNamed([r, g, b, a]);
+      return rgbToNamed([or, og, ob]);
     }
 
     default:
